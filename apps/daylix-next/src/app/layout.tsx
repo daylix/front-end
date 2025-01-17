@@ -1,8 +1,8 @@
 import './global.css';
 
 export const metadata = {
-  title: 'Daylix.pro - Платформа для обговорення ігор, технологій, гаджетів, фільмів та різних подій',
-  description: 'Платформа для обговорення ігор, технологій, гаджетів, фільмів та різних подій',
+  title: 'daylix.pro - платформа для захоплених іграми, кіно, інноваціями, залізом, та технологіями.',
+  description: 'Платформа для захоплених іграми, кіно, інноваціями, залізом, та технологіями.',
 };
 
 export default function RootLayout({
@@ -11,7 +11,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="ua">
       <body>{children}</body>
     </html>
   );
