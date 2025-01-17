@@ -1,0 +1,9 @@
+{
+  "name": "daylix-next",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/daylix-next",
+  "projectType": "application",
+  "tags": [],
+  "// targets": "to see all targets run: nx show project daylix-next --web",
+  "targets": {}
+}
