@@ -1,7 +1,7 @@
 import React, { useMemo } from 'react';
 import clsx from 'clsx';
 import { twMerge } from 'tailwind-merge';
-import { NavbarProps } from '@daylix-next/daylix-ui';
+import { NavbarProps } from './navbar';
 
 /**
  * Enumeration for Navbar position options.
