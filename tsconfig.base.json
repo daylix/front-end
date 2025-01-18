@@ -14,7 +14,10 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "@daylix/components": ["components/src/index.ts"],
+      "@daylix-ui/components": ["daylix-ui/src/index.ts"],
+    }
   },
   "exclude": ["node_modules", "tmp"]
 }
