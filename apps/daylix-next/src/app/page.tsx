@@ -1,5 +1,4 @@
 import { Header } from '@daylix/components';
-import { Button } from '@daylix-ui/components';
 
 export default function ComingSoon () {
   return (

@@ -1,0 +1,9 @@
+{
+  "homePage": {
+    "navBar": {
+      "createPost": {
+        "title": "Создать Пост"
+      }
+    }
+  }
+}
