@@ -34,7 +34,7 @@ const Navbar = React.forwardRef<HTMLDivElement, NavbarProps>(({
  * Higher-order function to generate Navbar position components.
  */
 const createNavbarPosition = (position: NavbarPositionType) =>
-  React.forwardRef<HTMLDivElement, Omit<NavbarPositionProps, 'section'>>((props, ref) => (
+  React.forwardRef<HTMLDivElement, Omit<NavbarPositionProps, 'position'>>((props, ref) => (
     <NavbarPosition {...props} position={position} ref={ref} />
   ));
 

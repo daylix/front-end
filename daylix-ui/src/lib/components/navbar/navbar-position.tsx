@@ -27,7 +27,7 @@ export type NavbarPositionProps = NavbarProps & {
 
 /**
  * The NavbarPosition component.
- * Renders a section within a Navbar, positioning its content based on the 'position' prop.
+ * Renders a position within a Navbar, positioning its content based on the 'position' prop.
  * Utilizes 'twMerge' and 'clsx' for conditional class name merging and conditional class application.
  *
  * @param {NavbarPositionProps} props - The properties of the NavbarPosition component.

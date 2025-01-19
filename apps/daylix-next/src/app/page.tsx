@@ -1,4 +1,5 @@
 import { Header } from '@daylix/components';
+import { Button } from '@daylix-ui/components';
 
 export default function ComingSoon () {
   return (
@@ -28,7 +29,6 @@ export default function ComingSoon () {
               </p>
             </div>
           </section>
-
           <footer className="flex flex-col items-center mt-12 sm:flex-row sm:justify-center sm:space-x-4">
             <div className="mt-4 -mx-4 md:mt-0 flex justify-center space-x-4">
               <a
