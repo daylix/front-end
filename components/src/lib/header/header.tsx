@@ -3,6 +3,7 @@
 import { Button, Navbar } from '@daylix-ui/components';
 import { useTranslations } from 'next-intl';
 import { Pencil } from 'lucide-react';
+import { LocalSwitcher } from '@daylix/components';
 
 export function Header() {
   const t = useTranslations('homePage.navBar');
@@ -34,6 +35,7 @@ export function Header() {
             <Pencil size={28} strokeWidth={1.25} />
             {t('createPost.title')}
           </Button>
+          <LocalSwitcher />
         </div>
       </Navbar.End>
     </Navbar>
