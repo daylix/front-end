@@ -2,32 +2,35 @@
 
 import { useLocale } from 'next-intl';
 import { useRouter } from 'next/navigation';
-import { ChangeEvent, useTransition } from 'react';
+import { useTransition } from 'react';
+import { Dropdown } from '@daylix-ui/components';
+import { Globe } from 'lucide-react';
 
 export default function LocalSwitcher() {
   const [isPending, startTransition] = useTransition();
   const router = useRouter();
   const localActive = useLocale();
 
-  const onSelectChange = (e: ChangeEvent<HTMLSelectElement>) => {
-    const nextLocale = e.target.value;
+  const onSelectChange = (nextLocale: string) => {
     startTransition(() => {
       router.replace(`/${nextLocale}`);
     });
   };
 
   return (
-    <label className='border-2 rounded'>
-      <p className='sr-only'>Обрати мову</p>
-      <select
-        defaultValue={localActive}
-        className='bg-transparent py-2'
-        onChange={onSelectChange}
-        disabled={isPending}
-      >
-        <option value='uk'>Українська</option>
-        <option value='ru'>Російська</option>
-      </select>
-    </label>
+    <Dropdown end={true}>
+      <Dropdown.Toggle className="btn btn-ghost rounded-btn" button={false}>
+        <Globe size={28} strokeWidth={1.25} />
+        <span className="ml-2 hidden md:inline">{localActive === 'uk' ? 'UA' : 'RU'}</span>
+      </Dropdown.Toggle>
+      <Dropdown.Menu className="mt-4">
+        <Dropdown.Item onClick={() => onSelectChange('uk')}>
+          Українська
+        </Dropdown.Item>
+        <Dropdown.Item onClick={() => onSelectChange('ru')}>
+          Русский
+        </Dropdown.Item>
+      </Dropdown.Menu>
+    </Dropdown>
   );
 }

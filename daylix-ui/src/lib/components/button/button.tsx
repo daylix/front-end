@@ -5,7 +5,7 @@ import { ComponentBaseProps, ComponentColor, ComponentShape, ComponentSize } fro
 
 type ButtonBaseProps = React.ButtonHTMLAttributes<HTMLButtonElement> & ComponentBaseProps
 
-interface ButtonProps extends ButtonBaseProps {
+export interface ButtonProps extends ButtonBaseProps {
   shape?: ComponentShape
   size?: ComponentSize
   variant?: 'outline' | 'link'

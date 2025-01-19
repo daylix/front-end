@@ -1,6 +1,8 @@
 import { Header } from '@daylix/components';
+import { useTranslations } from 'next-intl';
 
 export default function Page() {
+  const t = useTranslations('soonPage');
   return (
     <>
     <Header />
@@ -11,20 +13,19 @@ export default function Page() {
             <h1 className="text-5xl font-extrabold text-center lg:text-7xl 2xl:text-8xl">
               <span
                 className="text-transparent bg-gradient-to-br bg-clip-text from-teal-500 via-indigo-500 to-sky-500 dark:from-teal-200 dark:via-indigo-300 dark:to-sky-500">
-                В процесі
+                {t('titlePartOne')}
               </span>{' '}
               <span
                 className="text-transparent bg-gradient-to-tr bg-clip-text from-blue-500 via-pink-500 to-red-500 dark:from-sky-300 dark:via-pink-300 dark:to-red-500">
-                розробки
+                {t('titlePartTwo')}
               </span>
             </h1>
 
             <p className="mx-auto mt-6 text-lg text-center text-gray-700 dark:text-white md:text-xl">
-              daylix.pro — платформа для захоплених іграми, кіно, інноваціями, залізом, та технологіями.
+              {t('descriptionPartOne')}
             </p>
-
             <p className="mt-8 text-center text-gray-700 dark:text-white text-md md:text-xl">
-              Ми обов’язково повідомимо, коли платформа буде готова!
+              {t('descriptionPartTwo')}
             </p>
           </div>
         </section>
