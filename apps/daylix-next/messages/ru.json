@@ -1,0 +1,15 @@
+{
+  "homePage": {
+    "navBar": {
+      "createPost": {
+        "title": "Создать Пост"
+      }
+    }
+  },
+  "soonPage": {
+    "titlePartOne": "В",
+    "titlePartTwo": "разработке",
+    "descriptionPartOne": "daylix.pro — платформа для увлечённых играми, кино, инновациями, железом и технологиями.",
+    "descriptionPartTwo": "Мы обязательно сообщим, когда платформа будет готова!"
+  }
+}

@@ -8,15 +8,15 @@
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
     "importHelpers": true,
-    "target": "es2015",
+    "target": "es2020",
     "module": "esnext",
     "lib": ["es2020", "dom"],
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@daylix/components": ["components/src/index.ts"],
       "@daylix-ui/components": ["daylix-ui/src/index.ts"],
+      "@daylix/components": ["components/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

@@ -39,3 +39,5 @@ export const themesConst = [
   'nord',
   'sunset',
 ] as const
+
+export const defaultTheme = 'dark'

@@ -11,11 +11,11 @@ module.exports = {
     ),
     ...createGlobPatternsForDependencies(__dirname),
   ],
-  theme: {
-    themes: ["light", "dark", "night"],
-  },
   daisyui: {
     themes: ["light", "dark", "night"],
+    styled: true,
+    base: true,
+    utils: true,
   },
   plugins: [daisyui],
 };
