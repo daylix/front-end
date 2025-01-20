@@ -1,7 +1,7 @@
 import React from 'react';
 import { twMerge } from 'tailwind-merge';
 import NavbarPosition, { NavbarPositionProps, NavbarPositionType } from './navbar-position';
-import { ComponentBaseProps } from '../../core/base/types';
+import { ComponentBaseProps } from '../../core';
 
 /**
  * Type for the props of the Navbar component, combining HTML div attributes with base component props.
