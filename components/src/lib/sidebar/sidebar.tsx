@@ -1,8 +1,8 @@
 'use client';
 
 import React, { useState, useCallback } from 'react';
-import { Button, Drawer } from '@daylix-ui/components';
-import { Menu } from '@daylix-ui/components';
+import { Button, Drawer, Menu } from '@daylix-ui/components';
+import { useDetectClickOutside } from '@daylix-ui/hooks';
 
 const Sidebar: React.FC = () => {
   const [visible, setVisible] = useState(false);
@@ -10,6 +10,15 @@ const Sidebar: React.FC = () => {
   const toggleVisible = useCallback(() => {
     setVisible(prev => !prev);
   }, []);
+
+  const closeDrawer = useCallback(() => {
+    setVisible(false);
+  }, []);
+
+  const ref = useDetectClickOutside({
+    onTriggered: closeDrawer,
+    disableKeys: true,
+  });
 
   return (
     <>
@@ -23,7 +32,7 @@ const Sidebar: React.FC = () => {
         open={visible}
         onClickOverlay={toggleVisible}
         side={
-          <Menu className="p-4 w-80 h-full bg-base-200 text-base-content">
+          <Menu ref={ref as React.LegacyRef<HTMLUListElement>} className="p-4 w-80 h-full bg-base-200 text-base-content">
             <Menu.Item>
               <a>Sidebar Item 1</a>
             </Menu.Item>

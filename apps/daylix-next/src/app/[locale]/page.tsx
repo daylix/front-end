@@ -1,5 +1,5 @@
-import { Header } from '@daylix/components';
 import { useTranslations } from 'next-intl';
+import Header from '@daylix/header';
 
 export default function Page() {
   const t = useTranslations('soonPage');
