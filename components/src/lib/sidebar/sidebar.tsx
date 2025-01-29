@@ -3,8 +3,12 @@
 import React, { useState, useCallback } from 'react';
 import { Button, Drawer, Menu } from '@daylix-ui/components';
 import { useDetectClickOutside } from '@daylix-ui/hooks';
+import { useTranslations } from 'next-intl';
+import { Info } from 'lucide-react';
 
 const Sidebar: React.FC = () => {
+  const t = useTranslations('sideBar.menu');
+
   const [visible, setVisible] = useState(false);
 
   const toggleVisible = useCallback(() => {
@@ -28,16 +32,16 @@ const Sidebar: React.FC = () => {
         </svg>
       </Button>
       <Drawer
-        className="w-0"
+        className="w-0 z-[1]"
         open={visible}
         onClickOverlay={toggleVisible}
         side={
-          <Menu ref={ref as React.LegacyRef<HTMLUListElement>} className="p-4 w-80 h-full bg-base-200 text-base-content">
+          <Menu ref={ref as React.LegacyRef<HTMLUListElement>} className="menu-lg p-4 w-80 h-full bg-base-200 text-base-content">
             <Menu.Item>
-              <a>Sidebar Item 1</a>
-            </Menu.Item>
-            <Menu.Item>
-              <a>Sidebar Item 2</a>
+              <a>
+                <Info size={28} strokeWidth={1.5} />
+                {t('about')}
+              </a>
             </Menu.Item>
           </Menu>
         }
