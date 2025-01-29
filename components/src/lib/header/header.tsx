@@ -4,17 +4,14 @@ import { Button, Navbar } from '@daylix-ui/components';
 import { useTranslations } from 'next-intl';
 import { Pencil } from 'lucide-react';
 import LocalSwitcher from '../local-switcher';
+import Sidebar from '../sidebar';
 
 export function Header() {
   const t = useTranslations('homePage.navBar');
   return (
     <Navbar>
-      <Navbar.Start className="px-2 lg:flex-none gap-4">
-        <Button shape="square" tabIndex={0}>
-          <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 6h16M4 12h16M4 18h7" />
-          </svg>
-        </Button>
+      <Navbar.Start>
+        <Sidebar />
         <a href="#">
           <img
             className="w-auto"

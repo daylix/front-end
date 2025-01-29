@@ -9,16 +9,26 @@ import DropdownMenu from './dropdown-menu'
 import DropdownItem from './dropdown-item'
 import DropdownToggle from './dropdown-toggle'
 
+/**
+ * Props for the Dropdown component.
+ * @template T - The type of HTML element (default: HTMLDivElement)
+ */
 export type DropdownProps<T extends HTMLElement = HTMLDivElement> =
   React.HTMLAttributes<T> &
   ComponentBaseProps & {
+    /** Content to be rendered inside the dropdown */
     item?: ReactNode
+    /** Horizontal positioning of the dropdown */
     horizontal?: 'left' | 'right'
+    /** Vertical positioning of the dropdown */
     vertical?: 'top' | 'bottom'
+    /** Whether the dropdown should be aligned to the end */
     end?: boolean
+    /** Whether the dropdown should open on hover */
     hover?: boolean
+    /** Whether the dropdown is currently open */
     open?: boolean
-  }
+}
 
 export const classesFn = ({
   className,
