@@ -1,0 +1,15 @@
+overwrite: true
+schema: "https://strapi.daylix.pro/graphql"
+documents:
+  - "src/**/*.tsx"
+  - "src/**/*.ts"
+  - "apps/**/*.tsx"
+  - "apps/**/*.ts"
+generates:
+  core/src/lib/graphql/generated/graphql.ts:
+    plugins:
+      - "typescript"
+      - "typescript-operations"
+    config:
+      constEnums: true
+      immutableTypes: true
