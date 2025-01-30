@@ -1,11 +1,9 @@
 import { useTranslations } from 'next-intl';
-import Header from '@daylix/header';
 
 export default function Page() {
   const t = useTranslations('soonPage');
   return (
     <>
-    <Header />
     <section className="w-full min-h-screen bg-white" style={{ backgroundColor : '#191E24' }}>
       <div className="container relative flex flex-col min-h-screen px-6 py-8 mx-auto">
         <section className="flex items-center flex-1">

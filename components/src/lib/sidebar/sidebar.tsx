@@ -3,11 +3,15 @@
 import React, { useState, useCallback } from 'react';
 import { Button, Drawer, Menu } from '@daylix-ui/components';
 import { useDetectClickOutside } from '@daylix-ui/hooks';
-import { useTranslations } from 'next-intl';
+import { useTranslations, useLocale } from 'next-intl';
 import { Info } from 'lucide-react';
+import Link from 'next/link';
+
 
 const Sidebar: React.FC = () => {
   const t = useTranslations('sideBar.menu');
+
+  const locale = useLocale();
 
   const [visible, setVisible] = useState(false);
 
@@ -38,10 +42,10 @@ const Sidebar: React.FC = () => {
         side={
           <Menu ref={ref as React.LegacyRef<HTMLUListElement>} className="menu-lg p-4 w-80 h-full bg-base-200 text-base-content">
             <Menu.Item>
-              <a>
+              <Link href={`/${locale}/about`} className="flex items-center gap-2">
                 <Info size={28} strokeWidth={1.5} />
                 {t('about')}
-              </a>
+              </Link>
             </Menu.Item>
           </Menu>
         }
