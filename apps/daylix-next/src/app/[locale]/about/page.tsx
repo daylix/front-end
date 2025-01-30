@@ -4,7 +4,7 @@ import { GetAboutQuery, GetAboutQueryVariables } from '@daylix/core/graphql/gene
 import { client } from '@daylix/core';
 import { gql, useQuery } from "@apollo/client";
 import { useParams } from 'next/navigation';
-import { BlocksRenderer, type BlocksContent } from '@strapi/blocks-react-renderer';
+import { BlocksRenderer } from '@strapi/blocks-react-renderer';
 import { ReactNode } from 'react';
 
 export const GET_ABOUT = gql`
