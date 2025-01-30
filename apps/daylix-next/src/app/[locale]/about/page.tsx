@@ -5,9 +5,8 @@ import { client } from '@daylix/core';
 import { gql, useQuery } from "@apollo/client";
 import { useParams } from 'next/navigation';
 import { BlocksRenderer } from '@strapi/blocks-react-renderer';
-import { ReactNode } from 'react';
 
-export const GET_ABOUT = gql`
+const GET_ABOUT = gql`
   query GetAbout($locale: I18NLocaleCode!) {
     about(locale: $locale) {
       title
@@ -15,15 +14,6 @@ export const GET_ABOUT = gql`
     }
   }
 `;
-
-const convertStringToBlocks = (content: string) => {
-  return [
-    {
-      type: 'paragraph',
-      children: [{ type: 'text', text: content }],
-    },
-  ];
-};
 
 export default function AboutPage() {
   const { locale } = useParams();
@@ -48,12 +38,12 @@ export default function AboutPage() {
             <BlocksRenderer
               content={about.content}
               blocks={{
-                paragraph: ({ children }: { children: ReactNode }) => <p className="my-4">{children}</p>,
-                link: ({ children, url }: { children: ReactNode, url: string }) => <a href={url} className="text-blue-500 hover:underline">{children}</a>,
+                paragraph: ({ children }) => <p className="my-4">{children}</p>,
+                link: ({ children, url }) => <a href={url} className="text-blue-500 hover:underline">{children}</a>,
               }}
               modifiers={{
-                bold: ({ children }: { children: ReactNode }) => <strong className="font-bold">{children}</strong>,
-                italic: ({ children }: { children: ReactNode }) => <em className="italic">{children}</em>,
+                bold: ({ children }) => <strong className="font-bold">{children}</strong>,
+                italic: ({ children }) => <em className="italic">{children}</em>,
               }}
             />
           </div>
