@@ -5,6 +5,7 @@ import { useTranslations } from 'next-intl';
 import { Pencil } from 'lucide-react';
 import LocalSwitcher from '../local-switcher';
 import Sidebar from '../sidebar';
+import Link from 'next/link';
 
 export function Header() {
   const t = useTranslations('homePage.navBar');
@@ -12,12 +13,13 @@ export function Header() {
     <Navbar>
       <Navbar.Start>
         <Sidebar />
-        <a href="#">
+        <Link href="/">
           <img
             className="w-auto"
             src="/daylix_logo.svg"
-            alt="daylix.pro logo" />
-        </a>
+            alt="daylix.pro logo"
+          />
+        </Link>
       </Navbar.Start>
       <Navbar.End>
         <div className="flex gap-4">

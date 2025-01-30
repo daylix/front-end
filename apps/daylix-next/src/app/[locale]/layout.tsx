@@ -3,6 +3,7 @@ import {getMessages} from 'next-intl/server';
 import {notFound} from 'next/navigation';
 import {routing} from '../../i18n/routing';
 import '../global.css'
+import Header from '@daylix/header';
 
 export const metadata = {
   title: 'daylix.pro - платформа для захоплених іграми, кіно, інноваціями, залізом, та технологіями.',
@@ -29,6 +30,7 @@ export default async function LocaleLayout({
     <html lang={locale}>
     <body>
     <NextIntlClientProvider messages={messages}>
+      <Header />
       {children}
     </NextIntlClientProvider>
     </body>

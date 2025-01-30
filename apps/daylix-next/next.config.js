@@ -14,7 +14,9 @@ const nextConfig = {
     // See: https://github.com/gregberge/svgr
     svgr: false,
   },
-  // Додайте інші налаштування Next.js тут
+  experimental: {
+    serverComponentsExternalPackages: ["graphql"],
+  },
 };
 
 const plugins = [
