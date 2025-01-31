@@ -4,8 +4,8 @@
   "license": "MIT",
   "scripts": {
     "frontend:dev": "nx run daylix-next:dev",
-    "frontend:build": "NODE_ENV=production nx run daylix-next:build",
-    "frontend:start": "NODE_ENV=production nx run daylix-next:start",
+    "frontend:build": "nx run daylix-next:build",
+    "frontend:start": "nx run daylix-next:start",
     "frontend:lint": "nx run daylix-next:lint",
     "generate": "graphql-codegen"
   },

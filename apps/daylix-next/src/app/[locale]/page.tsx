@@ -1,6 +1,7 @@
 import { useTranslations } from 'next-intl';
 
 export default function Page() {
+  console.log('ENV', process.env.NEXT_PUBLIC_API_URL);
   const t = useTranslations('soonPage');
   return (
     <>

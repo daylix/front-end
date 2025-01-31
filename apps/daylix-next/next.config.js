@@ -17,6 +17,11 @@ const nextConfig = {
   experimental: {
     serverComponentsExternalPackages: ["graphql"],
   },
+  env: {
+    NEXT_PUBLIC_API_URL: process.env.NODE_ENV === 'production' 
+      ? 'https://strapi.daylix.pro/graphql'
+      : 'http://localhost:1337/graphql'
+  }
 };
 
 const plugins = [
