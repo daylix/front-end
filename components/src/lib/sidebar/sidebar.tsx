@@ -4,7 +4,7 @@ import React, { useState, useCallback } from 'react';
 import { Button, Drawer, Menu } from '@daylix-ui/components';
 import { useDetectClickOutside } from '@daylix-ui/hooks';
 import { useTranslations, useLocale } from 'next-intl';
-import { Info } from 'lucide-react';
+import { BookText, Info } from 'lucide-react';
 import Link from 'next/link';
 
 
@@ -41,10 +41,14 @@ const Sidebar: React.FC = () => {
         onClickOverlay={toggleVisible}
         side={
           <Menu ref={ref as React.LegacyRef<HTMLUListElement>} className="menu-lg p-4 w-80 h-full bg-base-200 text-base-content">
-            <Menu.Item>
+            <Menu.Item onClick={closeDrawer}>
               <Link href={`/${locale}/about`} className="flex items-center gap-2">
                 <Info size={28} strokeWidth={1.5} />
                 {t('about')}
+              </Link>
+              <Link href={`/${locale}/rules`} className="flex items-center gap-2">
+                <BookText size={28} strokeWidth={1.5} />
+                {t('rules')}
               </Link>
             </Menu.Item>
           </Menu>

@@ -8,7 +8,7 @@ schema {
 "Indicates exactly one field must be supplied and this field must not be `null`."
 directive @oneOf on INPUT_OBJECT
 
-union GenericMorph = About | Category | I18NLocale | Post | ReviewWorkflowsWorkflow | ReviewWorkflowsWorkflowStage | UploadFile | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsUser
+union GenericMorph = About | I18NLocale | ReviewWorkflowsWorkflow | ReviewWorkflowsWorkflowStage | Rule | UploadFile | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsUser
 
 type About {
   content: JSON!
@@ -24,28 +24,6 @@ type About {
 
 type AboutRelationResponseCollection {
   nodes: [About!]!
-}
-
-type Category {
-  createdAt: DateTime
-  documentId: ID!
-  locale: String
-  localizations(filters: CategoryFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [Category]!
-  localizations_connection(filters: CategoryFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): CategoryRelationResponseCollection
-  posts(filters: PostFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [Post]!
-  posts_connection(filters: PostFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): PostRelationResponseCollection
-  publishedAt: DateTime
-  tag: String!
-  updatedAt: DateTime
-}
-
-type CategoryEntityResponseCollection {
-  nodes: [Category!]!
-  pageInfo: Pagination!
-}
-
-type CategoryRelationResponseCollection {
-  nodes: [Category!]!
 }
 
 type DeleteMutationResponse {
@@ -69,18 +47,6 @@ type I18NLocaleEntityResponseCollection {
 type Mutation {
   "Change user password. Confirm with the current password."
   changePassword(currentPassword: String!, password: String!, passwordConfirmation: String!): UsersPermissionsLoginPayload
-  createCategory(
-    data: CategoryInput!,
-    "The locale to use for the query"
-    locale: I18NLocaleCode,
-    status: PublicationStatus = PUBLISHED
-  ): Category
-  createPost(
-    data: PostInput!,
-    "The locale to use for the query"
-    locale: I18NLocaleCode,
-    status: PublicationStatus = PUBLISHED
-  ): Post
   createReviewWorkflowsWorkflow(data: ReviewWorkflowsWorkflowInput!, status: PublicationStatus = PUBLISHED): ReviewWorkflowsWorkflow
   createReviewWorkflowsWorkflowStage(data: ReviewWorkflowsWorkflowStageInput!, status: PublicationStatus = PUBLISHED): ReviewWorkflowsWorkflowStage
   "Create a new role"
@@ -91,18 +57,12 @@ type Mutation {
     "The locale to use for the query"
     locale: I18NLocaleCode
   ): DeleteMutationResponse
-  deleteCategory(
-    documentId: ID!,
-    "The locale to use for the query"
-    locale: I18NLocaleCode
-  ): DeleteMutationResponse
-  deletePost(
-    documentId: ID!,
-    "The locale to use for the query"
-    locale: I18NLocaleCode
-  ): DeleteMutationResponse
   deleteReviewWorkflowsWorkflow(documentId: ID!): DeleteMutationResponse
   deleteReviewWorkflowsWorkflowStage(documentId: ID!): DeleteMutationResponse
+  deleteRule(
+    "The locale to use for the query"
+    locale: I18NLocaleCode
+  ): DeleteMutationResponse
   deleteUploadFile(id: ID!): UploadFile
   "Delete an existing role"
   deleteUsersPermissionsRole(id: ID!): UsersPermissionsDeleteRolePayload
@@ -123,22 +83,14 @@ type Mutation {
     locale: I18NLocaleCode,
     status: PublicationStatus = PUBLISHED
   ): About
-  updateCategory(
-    data: CategoryInput!,
-    documentId: ID!,
-    "The locale to use for the query"
-    locale: I18NLocaleCode,
-    status: PublicationStatus = PUBLISHED
-  ): Category
-  updatePost(
-    data: PostInput!,
-    documentId: ID!,
-    "The locale to use for the query"
-    locale: I18NLocaleCode,
-    status: PublicationStatus = PUBLISHED
-  ): Post
   updateReviewWorkflowsWorkflow(data: ReviewWorkflowsWorkflowInput!, documentId: ID!, status: PublicationStatus = PUBLISHED): ReviewWorkflowsWorkflow
   updateReviewWorkflowsWorkflowStage(data: ReviewWorkflowsWorkflowStageInput!, documentId: ID!, status: PublicationStatus = PUBLISHED): ReviewWorkflowsWorkflowStage
+  updateRule(
+    data: RuleInput!,
+    "The locale to use for the query"
+    locale: I18NLocaleCode,
+    status: PublicationStatus = PUBLISHED
+  ): Rule
   updateUploadFile(id: ID!, info: FileInfoInput): UploadFile!
   "Update an existing role"
   updateUsersPermissionsRole(data: UsersPermissionsRoleInput!, id: ID!): UsersPermissionsUpdateRolePayload
@@ -153,95 +105,27 @@ type Pagination {
   total: Int!
 }
 
-type Post {
-  author: String
-  categories(filters: CategoryFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [Category]!
-  categories_connection(filters: CategoryFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): CategoryRelationResponseCollection
-  content: String!
-  cover: UploadFile
-  createdAt: DateTime
-  documentId: ID!
-  downvotes: Int
-  isNSFW: Boolean
-  locale: String
-  localizations(filters: PostFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): [Post]!
-  localizations_connection(filters: PostFiltersInput, pagination: PaginationArg = {}, sort: [String] = []): PostRelationResponseCollection
-  publishedAt: DateTime
-  slug: String!
-  title: String!
-  updatedAt: DateTime
-  upvotes: Int
-}
-
-type PostEntityResponseCollection {
-  nodes: [Post!]!
-  pageInfo: Pagination!
-}
-
-type PostRelationResponseCollection {
-  nodes: [Post!]!
-}
-
 type Query {
   about(
     "The locale to use for the query"
     locale: I18NLocaleCode,
     status: PublicationStatus = PUBLISHED
   ): About
-  categories(
-    filters: CategoryFiltersInput,
-    "The locale to use for the query"
-    locale: I18NLocaleCode,
-    pagination: PaginationArg = {},
-    sort: [String] = [],
-    status: PublicationStatus = PUBLISHED
-  ): [Category]!
-  categories_connection(
-    filters: CategoryFiltersInput,
-    "The locale to use for the query"
-    locale: I18NLocaleCode,
-    pagination: PaginationArg = {},
-    sort: [String] = [],
-    status: PublicationStatus = PUBLISHED
-  ): CategoryEntityResponseCollection
-  category(
-    documentId: ID!,
-    "The locale to use for the query"
-    locale: I18NLocaleCode,
-    status: PublicationStatus = PUBLISHED
-  ): Category
   i18NLocale(documentId: ID!, status: PublicationStatus = PUBLISHED): I18NLocale
   i18NLocales(filters: I18NLocaleFiltersInput, pagination: PaginationArg = {}, sort: [String] = [], status: PublicationStatus = PUBLISHED): [I18NLocale]!
   i18NLocales_connection(filters: I18NLocaleFiltersInput, pagination: PaginationArg = {}, sort: [String] = [], status: PublicationStatus = PUBLISHED): I18NLocaleEntityResponseCollection
   me: UsersPermissionsMe
-  post(
-    documentId: ID!,
-    "The locale to use for the query"
-    locale: I18NLocaleCode,
-    status: PublicationStatus = PUBLISHED
-  ): Post
-  posts(
-    filters: PostFiltersInput,
-    "The locale to use for the query"
-    locale: I18NLocaleCode,
-    pagination: PaginationArg = {},
-    sort: [String] = [],
-    status: PublicationStatus = PUBLISHED
-  ): [Post]!
-  posts_connection(
-    filters: PostFiltersInput,
-    "The locale to use for the query"
-    locale: I18NLocaleCode,
-    pagination: PaginationArg = {},
-    sort: [String] = [],
-    status: PublicationStatus = PUBLISHED
-  ): PostEntityResponseCollection
   reviewWorkflowsWorkflow(documentId: ID!, status: PublicationStatus = PUBLISHED): ReviewWorkflowsWorkflow
   reviewWorkflowsWorkflowStage(documentId: ID!, status: PublicationStatus = PUBLISHED): ReviewWorkflowsWorkflowStage
   reviewWorkflowsWorkflowStages(filters: ReviewWorkflowsWorkflowStageFiltersInput, pagination: PaginationArg = {}, sort: [String] = [], status: PublicationStatus = PUBLISHED): [ReviewWorkflowsWorkflowStage]!
   reviewWorkflowsWorkflowStages_connection(filters: ReviewWorkflowsWorkflowStageFiltersInput, pagination: PaginationArg = {}, sort: [String] = [], status: PublicationStatus = PUBLISHED): ReviewWorkflowsWorkflowStageEntityResponseCollection
   reviewWorkflowsWorkflows(filters: ReviewWorkflowsWorkflowFiltersInput, pagination: PaginationArg = {}, sort: [String] = [], status: PublicationStatus = PUBLISHED): [ReviewWorkflowsWorkflow]!
   reviewWorkflowsWorkflows_connection(filters: ReviewWorkflowsWorkflowFiltersInput, pagination: PaginationArg = {}, sort: [String] = [], status: PublicationStatus = PUBLISHED): ReviewWorkflowsWorkflowEntityResponseCollection
+  rule(
+    "The locale to use for the query"
+    locale: I18NLocaleCode,
+    status: PublicationStatus = PUBLISHED
+  ): Rule
   uploadFile(documentId: ID!, status: PublicationStatus = PUBLISHED): UploadFile
   uploadFiles(filters: UploadFileFiltersInput, pagination: PaginationArg = {}, sort: [String] = [], status: PublicationStatus = PUBLISHED): [UploadFile]!
   uploadFiles_connection(filters: UploadFileFiltersInput, pagination: PaginationArg = {}, sort: [String] = [], status: PublicationStatus = PUBLISHED): UploadFileEntityResponseCollection
@@ -287,6 +171,22 @@ type ReviewWorkflowsWorkflowStageEntityResponseCollection {
 
 type ReviewWorkflowsWorkflowStageRelationResponseCollection {
   nodes: [ReviewWorkflowsWorkflowStage!]!
+}
+
+type Rule {
+  content: JSON!
+  createdAt: DateTime
+  documentId: ID!
+  locale: String
+  localizations: [Rule]!
+  localizations_connection: RuleRelationResponseCollection
+  publishedAt: DateTime
+  title: String!
+  updatedAt: DateTime
+}
+
+type RuleRelationResponseCollection {
+  nodes: [Rule!]!
 }
 
 type UploadFile {
@@ -457,26 +357,6 @@ input BooleanFilterInput {
   startsWith: Boolean
 }
 
-input CategoryFiltersInput {
-  and: [CategoryFiltersInput]
-  createdAt: DateTimeFilterInput
-  documentId: IDFilterInput
-  locale: StringFilterInput
-  localizations: CategoryFiltersInput
-  not: CategoryFiltersInput
-  or: [CategoryFiltersInput]
-  posts: PostFiltersInput
-  publishedAt: DateTimeFilterInput
-  tag: StringFilterInput
-  updatedAt: DateTimeFilterInput
-}
-
-input CategoryInput {
-  posts: [ID]
-  publishedAt: DateTime
-  tag: String
-}
-
 input DateTimeFilterInput {
   and: [DateTime]
   between: [DateTime]
@@ -627,39 +507,6 @@ input PaginationArg {
   start: Int
 }
 
-input PostFiltersInput {
-  and: [PostFiltersInput]
-  author: StringFilterInput
-  categories: CategoryFiltersInput
-  content: StringFilterInput
-  createdAt: DateTimeFilterInput
-  documentId: IDFilterInput
-  downvotes: IntFilterInput
-  isNSFW: BooleanFilterInput
-  locale: StringFilterInput
-  localizations: PostFiltersInput
-  not: PostFiltersInput
-  or: [PostFiltersInput]
-  publishedAt: DateTimeFilterInput
-  slug: StringFilterInput
-  title: StringFilterInput
-  updatedAt: DateTimeFilterInput
-  upvotes: IntFilterInput
-}
-
-input PostInput {
-  author: String
-  categories: [ID]
-  content: String
-  cover: ID
-  downvotes: Int
-  isNSFW: Boolean
-  publishedAt: DateTime
-  slug: String
-  title: String
-  upvotes: Int
-}
-
 input ReviewWorkflowsWorkflowFiltersInput {
   and: [ReviewWorkflowsWorkflowFiltersInput]
   contentTypes: JSONFilterInput
@@ -700,6 +547,12 @@ input ReviewWorkflowsWorkflowStageInput {
   name: String
   publishedAt: DateTime
   workflow: ID
+}
+
+input RuleInput {
+  content: JSON
+  publishedAt: DateTime
+  title: String
 }
 
 input StringFilterInput {

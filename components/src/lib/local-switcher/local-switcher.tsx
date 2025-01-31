@@ -1,7 +1,7 @@
 'use client';
 
 import { useLocale } from 'next-intl';
-import { useRouter } from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
 import { useTransition } from 'react';
 import { Dropdown } from '@daylix-ui/components';
 import { Globe } from 'lucide-react';
@@ -9,11 +9,14 @@ import { Globe } from 'lucide-react';
 export default function LocalSwitcher() {
   const [isPending, startTransition] = useTransition();
   const router = useRouter();
+  const pathname = usePathname();
   const localActive = useLocale();
 
   const onSelectChange = (nextLocale: string) => {
     startTransition(() => {
-      router.replace(`/${nextLocale}`);
+      const currentPath = pathname.split('/').slice(2).join('/');
+      const newPath = currentPath ? `/${nextLocale}/${currentPath}` : `/${nextLocale}`;
+      router.replace(newPath);
     });
   };
 

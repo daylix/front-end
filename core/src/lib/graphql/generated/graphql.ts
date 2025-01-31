@@ -66,79 +66,6 @@ export type BooleanFilterInput = {
   readonly startsWith?: InputMaybe<Scalars['Boolean']['input']>;
 };
 
-export type Category = {
-  readonly __typename?: 'Category';
-  readonly createdAt?: Maybe<Scalars['DateTime']['output']>;
-  readonly documentId: Scalars['ID']['output'];
-  readonly locale?: Maybe<Scalars['String']['output']>;
-  readonly localizations: ReadonlyArray<Maybe<Category>>;
-  readonly localizations_connection?: Maybe<CategoryRelationResponseCollection>;
-  readonly posts: ReadonlyArray<Maybe<Post>>;
-  readonly posts_connection?: Maybe<PostRelationResponseCollection>;
-  readonly publishedAt?: Maybe<Scalars['DateTime']['output']>;
-  readonly tag: Scalars['String']['output'];
-  readonly updatedAt?: Maybe<Scalars['DateTime']['output']>;
-};
-
-
-export type CategoryLocalizationsArgs = {
-  filters?: InputMaybe<CategoryFiltersInput>;
-  pagination?: InputMaybe<PaginationArg>;
-  sort?: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
-};
-
-
-export type CategoryLocalizations_ConnectionArgs = {
-  filters?: InputMaybe<CategoryFiltersInput>;
-  pagination?: InputMaybe<PaginationArg>;
-  sort?: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
-};
-
-
-export type CategoryPostsArgs = {
-  filters?: InputMaybe<PostFiltersInput>;
-  pagination?: InputMaybe<PaginationArg>;
-  sort?: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
-};
-
-
-export type CategoryPosts_ConnectionArgs = {
-  filters?: InputMaybe<PostFiltersInput>;
-  pagination?: InputMaybe<PaginationArg>;
-  sort?: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
-};
-
-export type CategoryEntityResponseCollection = {
-  readonly __typename?: 'CategoryEntityResponseCollection';
-  readonly nodes: ReadonlyArray<Category>;
-  readonly pageInfo: Pagination;
-};
-
-export type CategoryFiltersInput = {
-  readonly and?: InputMaybe<ReadonlyArray<InputMaybe<CategoryFiltersInput>>>;
-  readonly createdAt?: InputMaybe<DateTimeFilterInput>;
-  readonly documentId?: InputMaybe<IdFilterInput>;
-  readonly locale?: InputMaybe<StringFilterInput>;
-  readonly localizations?: InputMaybe<CategoryFiltersInput>;
-  readonly not?: InputMaybe<CategoryFiltersInput>;
-  readonly or?: InputMaybe<ReadonlyArray<InputMaybe<CategoryFiltersInput>>>;
-  readonly posts?: InputMaybe<PostFiltersInput>;
-  readonly publishedAt?: InputMaybe<DateTimeFilterInput>;
-  readonly tag?: InputMaybe<StringFilterInput>;
-  readonly updatedAt?: InputMaybe<DateTimeFilterInput>;
-};
-
-export type CategoryInput = {
-  readonly posts?: InputMaybe<ReadonlyArray<InputMaybe<Scalars['ID']['input']>>>;
-  readonly publishedAt?: InputMaybe<Scalars['DateTime']['input']>;
-  readonly tag?: InputMaybe<Scalars['String']['input']>;
-};
-
-export type CategoryRelationResponseCollection = {
-  readonly __typename?: 'CategoryRelationResponseCollection';
-  readonly nodes: ReadonlyArray<Category>;
-};
-
 export type DateTimeFilterInput = {
   readonly and?: InputMaybe<ReadonlyArray<InputMaybe<Scalars['DateTime']['input']>>>;
   readonly between?: InputMaybe<ReadonlyArray<InputMaybe<Scalars['DateTime']['input']>>>;
@@ -200,7 +127,7 @@ export type FloatFilterInput = {
   readonly startsWith?: InputMaybe<Scalars['Float']['input']>;
 };
 
-export type GenericMorph = About | Category | I18NLocale | Post | ReviewWorkflowsWorkflow | ReviewWorkflowsWorkflowStage | UploadFile | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsUser;
+export type GenericMorph = About | I18NLocale | ReviewWorkflowsWorkflow | ReviewWorkflowsWorkflowStage | Rule | UploadFile | UsersPermissionsPermission | UsersPermissionsRole | UsersPermissionsUser;
 
 export type I18NLocale = {
   readonly __typename?: 'I18NLocale';
@@ -309,8 +236,6 @@ export type Mutation = {
   readonly __typename?: 'Mutation';
   /** Change user password. Confirm with the current password. */
   readonly changePassword?: Maybe<UsersPermissionsLoginPayload>;
-  readonly createCategory?: Maybe<Category>;
-  readonly createPost?: Maybe<Post>;
   readonly createReviewWorkflowsWorkflow?: Maybe<ReviewWorkflowsWorkflow>;
   readonly createReviewWorkflowsWorkflowStage?: Maybe<ReviewWorkflowsWorkflowStage>;
   /** Create a new role */
@@ -318,10 +243,9 @@ export type Mutation = {
   /** Create a new user */
   readonly createUsersPermissionsUser: UsersPermissionsUserEntityResponse;
   readonly deleteAbout?: Maybe<DeleteMutationResponse>;
-  readonly deleteCategory?: Maybe<DeleteMutationResponse>;
-  readonly deletePost?: Maybe<DeleteMutationResponse>;
   readonly deleteReviewWorkflowsWorkflow?: Maybe<DeleteMutationResponse>;
   readonly deleteReviewWorkflowsWorkflowStage?: Maybe<DeleteMutationResponse>;
+  readonly deleteRule?: Maybe<DeleteMutationResponse>;
   readonly deleteUploadFile?: Maybe<UploadFile>;
   /** Delete an existing role */
   readonly deleteUsersPermissionsRole?: Maybe<UsersPermissionsDeleteRolePayload>;
@@ -337,10 +261,9 @@ export type Mutation = {
   /** Reset user password. Confirm with a code (resetToken from forgotPassword) */
   readonly resetPassword?: Maybe<UsersPermissionsLoginPayload>;
   readonly updateAbout?: Maybe<About>;
-  readonly updateCategory?: Maybe<Category>;
-  readonly updatePost?: Maybe<Post>;
   readonly updateReviewWorkflowsWorkflow?: Maybe<ReviewWorkflowsWorkflow>;
   readonly updateReviewWorkflowsWorkflowStage?: Maybe<ReviewWorkflowsWorkflowStage>;
+  readonly updateRule?: Maybe<Rule>;
   readonly updateUploadFile: UploadFile;
   /** Update an existing role */
   readonly updateUsersPermissionsRole?: Maybe<UsersPermissionsUpdateRolePayload>;
@@ -353,20 +276,6 @@ export type MutationChangePasswordArgs = {
   currentPassword: Scalars['String']['input'];
   password: Scalars['String']['input'];
   passwordConfirmation: Scalars['String']['input'];
-};
-
-
-export type MutationCreateCategoryArgs = {
-  data: CategoryInput;
-  locale?: InputMaybe<Scalars['I18NLocaleCode']['input']>;
-  status?: InputMaybe<PublicationStatus>;
-};
-
-
-export type MutationCreatePostArgs = {
-  data: PostInput;
-  locale?: InputMaybe<Scalars['I18NLocaleCode']['input']>;
-  status?: InputMaybe<PublicationStatus>;
 };
 
 
@@ -397,18 +306,6 @@ export type MutationDeleteAboutArgs = {
 };
 
 
-export type MutationDeleteCategoryArgs = {
-  documentId: Scalars['ID']['input'];
-  locale?: InputMaybe<Scalars['I18NLocaleCode']['input']>;
-};
-
-
-export type MutationDeletePostArgs = {
-  documentId: Scalars['ID']['input'];
-  locale?: InputMaybe<Scalars['I18NLocaleCode']['input']>;
-};
-
-
 export type MutationDeleteReviewWorkflowsWorkflowArgs = {
   documentId: Scalars['ID']['input'];
 };
@@ -416,6 +313,11 @@ export type MutationDeleteReviewWorkflowsWorkflowArgs = {
 
 export type MutationDeleteReviewWorkflowsWorkflowStageArgs = {
   documentId: Scalars['ID']['input'];
+};
+
+
+export type MutationDeleteRuleArgs = {
+  locale?: InputMaybe<Scalars['I18NLocaleCode']['input']>;
 };
 
 
@@ -468,22 +370,6 @@ export type MutationUpdateAboutArgs = {
 };
 
 
-export type MutationUpdateCategoryArgs = {
-  data: CategoryInput;
-  documentId: Scalars['ID']['input'];
-  locale?: InputMaybe<Scalars['I18NLocaleCode']['input']>;
-  status?: InputMaybe<PublicationStatus>;
-};
-
-
-export type MutationUpdatePostArgs = {
-  data: PostInput;
-  documentId: Scalars['ID']['input'];
-  locale?: InputMaybe<Scalars['I18NLocaleCode']['input']>;
-  status?: InputMaybe<PublicationStatus>;
-};
-
-
 export type MutationUpdateReviewWorkflowsWorkflowArgs = {
   data: ReviewWorkflowsWorkflowInput;
   documentId: Scalars['ID']['input'];
@@ -494,6 +380,13 @@ export type MutationUpdateReviewWorkflowsWorkflowArgs = {
 export type MutationUpdateReviewWorkflowsWorkflowStageArgs = {
   data: ReviewWorkflowsWorkflowStageInput;
   documentId: Scalars['ID']['input'];
+  status?: InputMaybe<PublicationStatus>;
+};
+
+
+export type MutationUpdateRuleArgs = {
+  data: RuleInput;
+  locale?: InputMaybe<Scalars['I18NLocaleCode']['input']>;
   status?: InputMaybe<PublicationStatus>;
 };
 
@@ -530,99 +423,6 @@ export type PaginationArg = {
   readonly start?: InputMaybe<Scalars['Int']['input']>;
 };
 
-export type Post = {
-  readonly __typename?: 'Post';
-  readonly author?: Maybe<Scalars['String']['output']>;
-  readonly categories: ReadonlyArray<Maybe<Category>>;
-  readonly categories_connection?: Maybe<CategoryRelationResponseCollection>;
-  readonly content: Scalars['String']['output'];
-  readonly cover?: Maybe<UploadFile>;
-  readonly createdAt?: Maybe<Scalars['DateTime']['output']>;
-  readonly documentId: Scalars['ID']['output'];
-  readonly downvotes?: Maybe<Scalars['Int']['output']>;
-  readonly isNSFW?: Maybe<Scalars['Boolean']['output']>;
-  readonly locale?: Maybe<Scalars['String']['output']>;
-  readonly localizations: ReadonlyArray<Maybe<Post>>;
-  readonly localizations_connection?: Maybe<PostRelationResponseCollection>;
-  readonly publishedAt?: Maybe<Scalars['DateTime']['output']>;
-  readonly slug: Scalars['String']['output'];
-  readonly title: Scalars['String']['output'];
-  readonly updatedAt?: Maybe<Scalars['DateTime']['output']>;
-  readonly upvotes?: Maybe<Scalars['Int']['output']>;
-};
-
-
-export type PostCategoriesArgs = {
-  filters?: InputMaybe<CategoryFiltersInput>;
-  pagination?: InputMaybe<PaginationArg>;
-  sort?: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
-};
-
-
-export type PostCategories_ConnectionArgs = {
-  filters?: InputMaybe<CategoryFiltersInput>;
-  pagination?: InputMaybe<PaginationArg>;
-  sort?: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
-};
-
-
-export type PostLocalizationsArgs = {
-  filters?: InputMaybe<PostFiltersInput>;
-  pagination?: InputMaybe<PaginationArg>;
-  sort?: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
-};
-
-
-export type PostLocalizations_ConnectionArgs = {
-  filters?: InputMaybe<PostFiltersInput>;
-  pagination?: InputMaybe<PaginationArg>;
-  sort?: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
-};
-
-export type PostEntityResponseCollection = {
-  readonly __typename?: 'PostEntityResponseCollection';
-  readonly nodes: ReadonlyArray<Post>;
-  readonly pageInfo: Pagination;
-};
-
-export type PostFiltersInput = {
-  readonly and?: InputMaybe<ReadonlyArray<InputMaybe<PostFiltersInput>>>;
-  readonly author?: InputMaybe<StringFilterInput>;
-  readonly categories?: InputMaybe<CategoryFiltersInput>;
-  readonly content?: InputMaybe<StringFilterInput>;
-  readonly createdAt?: InputMaybe<DateTimeFilterInput>;
-  readonly documentId?: InputMaybe<IdFilterInput>;
-  readonly downvotes?: InputMaybe<IntFilterInput>;
-  readonly isNSFW?: InputMaybe<BooleanFilterInput>;
-  readonly locale?: InputMaybe<StringFilterInput>;
-  readonly localizations?: InputMaybe<PostFiltersInput>;
-  readonly not?: InputMaybe<PostFiltersInput>;
-  readonly or?: InputMaybe<ReadonlyArray<InputMaybe<PostFiltersInput>>>;
-  readonly publishedAt?: InputMaybe<DateTimeFilterInput>;
-  readonly slug?: InputMaybe<StringFilterInput>;
-  readonly title?: InputMaybe<StringFilterInput>;
-  readonly updatedAt?: InputMaybe<DateTimeFilterInput>;
-  readonly upvotes?: InputMaybe<IntFilterInput>;
-};
-
-export type PostInput = {
-  readonly author?: InputMaybe<Scalars['String']['input']>;
-  readonly categories?: InputMaybe<ReadonlyArray<InputMaybe<Scalars['ID']['input']>>>;
-  readonly content?: InputMaybe<Scalars['String']['input']>;
-  readonly cover?: InputMaybe<Scalars['ID']['input']>;
-  readonly downvotes?: InputMaybe<Scalars['Int']['input']>;
-  readonly isNSFW?: InputMaybe<Scalars['Boolean']['input']>;
-  readonly publishedAt?: InputMaybe<Scalars['DateTime']['input']>;
-  readonly slug?: InputMaybe<Scalars['String']['input']>;
-  readonly title?: InputMaybe<Scalars['String']['input']>;
-  readonly upvotes?: InputMaybe<Scalars['Int']['input']>;
-};
-
-export type PostRelationResponseCollection = {
-  readonly __typename?: 'PostRelationResponseCollection';
-  readonly nodes: ReadonlyArray<Post>;
-};
-
 export const enum PublicationStatus {
   Draft = 'DRAFT',
   Published = 'PUBLISHED'
@@ -631,22 +431,17 @@ export const enum PublicationStatus {
 export type Query = {
   readonly __typename?: 'Query';
   readonly about?: Maybe<About>;
-  readonly categories: ReadonlyArray<Maybe<Category>>;
-  readonly categories_connection?: Maybe<CategoryEntityResponseCollection>;
-  readonly category?: Maybe<Category>;
   readonly i18NLocale?: Maybe<I18NLocale>;
   readonly i18NLocales: ReadonlyArray<Maybe<I18NLocale>>;
   readonly i18NLocales_connection?: Maybe<I18NLocaleEntityResponseCollection>;
   readonly me?: Maybe<UsersPermissionsMe>;
-  readonly post?: Maybe<Post>;
-  readonly posts: ReadonlyArray<Maybe<Post>>;
-  readonly posts_connection?: Maybe<PostEntityResponseCollection>;
   readonly reviewWorkflowsWorkflow?: Maybe<ReviewWorkflowsWorkflow>;
   readonly reviewWorkflowsWorkflowStage?: Maybe<ReviewWorkflowsWorkflowStage>;
   readonly reviewWorkflowsWorkflowStages: ReadonlyArray<Maybe<ReviewWorkflowsWorkflowStage>>;
   readonly reviewWorkflowsWorkflowStages_connection?: Maybe<ReviewWorkflowsWorkflowStageEntityResponseCollection>;
   readonly reviewWorkflowsWorkflows: ReadonlyArray<Maybe<ReviewWorkflowsWorkflow>>;
   readonly reviewWorkflowsWorkflows_connection?: Maybe<ReviewWorkflowsWorkflowEntityResponseCollection>;
+  readonly rule?: Maybe<Rule>;
   readonly uploadFile?: Maybe<UploadFile>;
   readonly uploadFiles: ReadonlyArray<Maybe<UploadFile>>;
   readonly uploadFiles_connection?: Maybe<UploadFileEntityResponseCollection>;
@@ -660,31 +455,6 @@ export type Query = {
 
 
 export type QueryAboutArgs = {
-  locale?: InputMaybe<Scalars['I18NLocaleCode']['input']>;
-  status?: InputMaybe<PublicationStatus>;
-};
-
-
-export type QueryCategoriesArgs = {
-  filters?: InputMaybe<CategoryFiltersInput>;
-  locale?: InputMaybe<Scalars['I18NLocaleCode']['input']>;
-  pagination?: InputMaybe<PaginationArg>;
-  sort?: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
-  status?: InputMaybe<PublicationStatus>;
-};
-
-
-export type QueryCategories_ConnectionArgs = {
-  filters?: InputMaybe<CategoryFiltersInput>;
-  locale?: InputMaybe<Scalars['I18NLocaleCode']['input']>;
-  pagination?: InputMaybe<PaginationArg>;
-  sort?: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
-  status?: InputMaybe<PublicationStatus>;
-};
-
-
-export type QueryCategoryArgs = {
-  documentId: Scalars['ID']['input'];
   locale?: InputMaybe<Scalars['I18NLocaleCode']['input']>;
   status?: InputMaybe<PublicationStatus>;
 };
@@ -706,31 +476,6 @@ export type QueryI18NLocalesArgs = {
 
 export type QueryI18NLocales_ConnectionArgs = {
   filters?: InputMaybe<I18NLocaleFiltersInput>;
-  pagination?: InputMaybe<PaginationArg>;
-  sort?: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
-  status?: InputMaybe<PublicationStatus>;
-};
-
-
-export type QueryPostArgs = {
-  documentId: Scalars['ID']['input'];
-  locale?: InputMaybe<Scalars['I18NLocaleCode']['input']>;
-  status?: InputMaybe<PublicationStatus>;
-};
-
-
-export type QueryPostsArgs = {
-  filters?: InputMaybe<PostFiltersInput>;
-  locale?: InputMaybe<Scalars['I18NLocaleCode']['input']>;
-  pagination?: InputMaybe<PaginationArg>;
-  sort?: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
-  status?: InputMaybe<PublicationStatus>;
-};
-
-
-export type QueryPosts_ConnectionArgs = {
-  filters?: InputMaybe<PostFiltersInput>;
-  locale?: InputMaybe<Scalars['I18NLocaleCode']['input']>;
   pagination?: InputMaybe<PaginationArg>;
   sort?: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
   status?: InputMaybe<PublicationStatus>;
@@ -777,6 +522,12 @@ export type QueryReviewWorkflowsWorkflows_ConnectionArgs = {
   filters?: InputMaybe<ReviewWorkflowsWorkflowFiltersInput>;
   pagination?: InputMaybe<PaginationArg>;
   sort?: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
+  status?: InputMaybe<PublicationStatus>;
+};
+
+
+export type QueryRuleArgs = {
+  locale?: InputMaybe<Scalars['I18NLocaleCode']['input']>;
   status?: InputMaybe<PublicationStatus>;
 };
 
@@ -941,6 +692,30 @@ export type ReviewWorkflowsWorkflowStageInput = {
 export type ReviewWorkflowsWorkflowStageRelationResponseCollection = {
   readonly __typename?: 'ReviewWorkflowsWorkflowStageRelationResponseCollection';
   readonly nodes: ReadonlyArray<ReviewWorkflowsWorkflowStage>;
+};
+
+export type Rule = {
+  readonly __typename?: 'Rule';
+  readonly content: Scalars['JSON']['output'];
+  readonly createdAt?: Maybe<Scalars['DateTime']['output']>;
+  readonly documentId: Scalars['ID']['output'];
+  readonly locale?: Maybe<Scalars['String']['output']>;
+  readonly localizations: ReadonlyArray<Maybe<Rule>>;
+  readonly localizations_connection?: Maybe<RuleRelationResponseCollection>;
+  readonly publishedAt?: Maybe<Scalars['DateTime']['output']>;
+  readonly title: Scalars['String']['output'];
+  readonly updatedAt?: Maybe<Scalars['DateTime']['output']>;
+};
+
+export type RuleInput = {
+  readonly content?: InputMaybe<Scalars['JSON']['input']>;
+  readonly publishedAt?: InputMaybe<Scalars['DateTime']['input']>;
+  readonly title?: InputMaybe<Scalars['String']['input']>;
+};
+
+export type RuleRelationResponseCollection = {
+  readonly __typename?: 'RuleRelationResponseCollection';
+  readonly nodes: ReadonlyArray<Rule>;
 };
 
 export type StringFilterInput = {
@@ -1241,3 +1016,10 @@ export type GetAboutQueryVariables = Exact<{
 
 
 export type GetAboutQuery = { readonly __typename?: 'Query', readonly about?: { readonly __typename?: 'About', readonly title: string, readonly content: any } | null };
+
+export type GetRulesQueryVariables = Exact<{
+  locale: Scalars['I18NLocaleCode']['input'];
+}>;
+
+
+export type GetRulesQuery = { readonly __typename?: 'Query', readonly rule?: { readonly __typename?: 'Rule', readonly title: string, readonly content: any } | null };

@@ -1,5 +1,5 @@
-import ClientBlocksRenderer from './сlient-blocks-renderer';
 import { getAboutData } from './about-api';
+import { ClientBlocksRenderer } from '@daylix/core';
 
 export const dynamic = 'force-dynamic';
 

@@ -3,10 +3,10 @@
   "version": "0.0.0",
   "license": "MIT",
   "scripts": {
-    "dev": "nx run daylix-next:dev",
-    "build": "nx run daylix-next:build",
-    "start": "nx run daylix-next:start",
-    "lint": "nx run daylix-next:lint",
+    "frontend:dev": "nx run daylix-next:dev",
+    "frontend:build": "NODE_ENV=production nx run daylix-next:build",
+    "frontend:start": "NODE_ENV=production nx run daylix-next:start",
+    "frontend:lint": "nx run daylix-next:lint",
     "generate": "graphql-codegen"
   },
   "private": true,
