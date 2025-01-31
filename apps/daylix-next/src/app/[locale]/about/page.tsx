@@ -1,7 +1,8 @@
 import { getAboutData } from './about-api';
 import { ClientBlocksRenderer } from '@daylix/core';
 
-export const dynamic = 'force-dynamic';
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
 
 export default async function AboutPage({ params }: { params: { locale: string } }) {
   const about = await getAboutData(params.locale);

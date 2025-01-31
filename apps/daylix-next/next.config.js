@@ -21,7 +21,19 @@ const nextConfig = {
     NEXT_PUBLIC_API_URL: process.env.NODE_ENV === 'production' 
       ? 'https://strapi.daylix.pro/graphql'
       : 'http://localhost:1337/graphql'
-  }
+  },
+  async headers() {
+    return [
+      {
+        source: '/:path*', // Match all routes
+        headers: [
+          { key: 'Cache-Control', value: 'no-store, no-cache, must-revalidate, proxy-revalidate' },
+          { key: 'Pragma', value: 'no-cache' },
+          { key: 'Expires', value: '0' },
+        ],
+      },
+    ];
+  },
 };
 
 const plugins = [

@@ -1,7 +1,8 @@
 import { getRulesData } from './rules-api';
 import { ClientBlocksRenderer } from '@daylix/core';
 
-export const dynamic = 'force-dynamic';
+export const dynamic = 'force-dynamic'
+export const revalidate = 0
 
 export default async function RulesPage({ params }: { params: { locale: string } }) {
   const rules = await getRulesData(params.locale);
