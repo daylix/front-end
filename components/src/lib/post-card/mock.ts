@@ -5,7 +5,7 @@ export const mockPost = {
   time: "5 хв",
   title: "Far Cry New Dawn",
   content: "Far Cry New Dawn отримає 60 fps на PS5 та Xbox Series X|S. 4 лютого гра з'явиться у Game Pass.",
-  image: "https://images.unsplash.com/photo-1552820728-8b83bb6b773f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80",
+  image: "https://staticctf.ubisoft.com/J3yJr34U2pZ2Ieem48Dwy9uqj5PNUQTn/BgUcl5T7p1YNLrck0FlvI/eb636d7f4fa7170e1c69c4e0663bcb8c/feature5_960x540.jpg",
   likes: 11,
   comments: 21,
   shares: 2,

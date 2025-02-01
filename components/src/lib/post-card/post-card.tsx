@@ -3,24 +3,28 @@ import { Heart, MessageSquare, Eye, MoreVertical, ThumbsDown } from 'lucide-reac
 import { Button } from '@daylix-ui/components';
 import Link from 'next/link';
 import CardContainer from '../card-container';
+import { BlocksContent } from '@strapi/blocks-react-renderer';
+import { ClientBlocksRenderer } from '@daylix/core';
 
 interface PostProps {
+  id: string;
   avatar: string;
   name: string;
   category: string;
   time: string;
   title: string;
-  content: string;
+  content: string | BlocksContent;
   image?: string;
   likes: number;
   dislikes: number;
   comments: number;
   shares: number;
   views: number;
-  href?: string;
+  locale: string;
 }
 
 const PostCard: React.FC<PostProps> = ({
+  id,
   avatar,
   name,
   category,
@@ -32,7 +36,7 @@ const PostCard: React.FC<PostProps> = ({
   dislikes,
   comments,
   views,
-  href = '#',
+  locale,
 }) => {
   return (
     <CardContainer>
@@ -72,10 +76,16 @@ const PostCard: React.FC<PostProps> = ({
       </div>
 
       {/* Content */}
-      <Link href={href} className="block mt-3 sm:mt-4">
+      <Link href={`/${locale}/posts/${id}`} className="block mt-3 sm:mt-4">
         <h2 className="text-xl sm:text-2xl font-bold mb-2">{title}</h2>
         <div>
-          <p className="text-base sm:text-lg">{content}</p>
+          <div className="text-base sm:text-lg line-clamp-3">
+            {typeof content === 'string' ? (
+              <p>{content}</p>
+            ) : (
+              <ClientBlocksRenderer content={content} />
+            )}
+          </div>
 
           {/* Image */}
           {image && (
