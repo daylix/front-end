@@ -18,12 +18,12 @@ module.exports = {
         'base-200': '#252526',
         'base-300': '#2D2D2D',
 
-        // Primary accent colors (VS Code blue)
+        // Primary accent colors
         'primary': {
-          'light': '#75BEFF',
-          DEFAULT: '#0078D4',
-          'dark': '#005A9E',
-          'hover': '#0066B5'
+          'light': '#6B84F5',
+          DEFAULT: '#405FF3',
+          'dark': '#2D4BE0',
+          'hover': '#3654E8'
         },
 
         // Text colors
@@ -93,8 +93,8 @@ module.exports = {
           "base-300": "#2D2D2D",
 
           // Accent colors
-          "primary": "#0078D4",
-          "primary-focus": "#0066B5",
+          "primary": "#405FF3",
+          "primary-focus": "#3654E8",
           "primary-content": "#FFFFFF",
 
           // Neutral colors
