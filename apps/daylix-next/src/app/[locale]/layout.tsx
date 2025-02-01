@@ -28,11 +28,13 @@ export default async function LocaleLayout({
 
   return (
     <html lang={locale}>
-    <body>
-    <NextIntlClientProvider messages={messages}>
-      <Header />
-      {children}
-    </NextIntlClientProvider>
+    <body className="bg-base-300">
+      <NextIntlClientProvider messages={messages}>
+        <Header />
+        <div className="max-w-7xl mx-auto">
+          {children}
+        </div>
+      </NextIntlClientProvider>
     </body>
     </html>
   );

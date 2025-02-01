@@ -1,6 +1,3 @@
-import { useTranslations } from 'next-intl';
-import PostCard from '@daylix/post-card';
-
 export const mockPost = {
   avatar: "https://avatars.githubusercontent.com/u/124599?v=4",
   name: "Микита Єнтус",
@@ -15,20 +12,3 @@ export const mockPost = {
   fires: 1,
   laughs: 1,
 };
-
-
-export default function Page() {
-  console.log('ENV', process.env.NEXT_PUBLIC_API_URL);
-  const t = useTranslations('soonPage');
-  return (
-    <>
-    <section className="w-full min-h-screen">
-      <div className="container relative flex flex-col min-h-screen px-6 py-8 mx-auto">
-        <PostCard {...mockPost} />
-        <PostCard {...mockPost} />
-        <PostCard {...mockPost} />
-      </div>
-    </section>
-  </>
-  )
-}

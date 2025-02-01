@@ -13,11 +13,12 @@ module.exports = {
   ],
   plugins: [daisyui],
   daisyui: {
-    themes: ["light", "dark", "night"],
+    themes: ["light", "dark"],
     base: true,
     utils: true,
     logs: false,
     rtl: false,
     prefix: '',
+    darkTheme: 'dark'
   },
 };
