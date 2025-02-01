@@ -1,8 +1,8 @@
 import { useTranslations } from 'next-intl';
 import PostCard from '@daylix/post-card';
 
-export const mockPost = {
-  id: "1", 
+const mockPost = {
+  id: "1",
   avatar: "https://avatars.githubusercontent.com/u/124599?v=4",
   name: "Микита Єнтус",
   category: "Ігри",
@@ -11,7 +11,7 @@ export const mockPost = {
   content: "Far Cry New Dawn отримає 60 fps на PS5 та Xbox Series X|S. 4 лютого гра з'явиться у Game Pass.",
   image: "https://staticctf.ubisoft.com/J3yJr34U2pZ2Ieem48Dwy9uqj5PNUQTn/BgUcl5T7p1YNLrck0FlvI/eb636d7f4fa7170e1c69c4e0663bcb8c/feature5_960x540.jpg",
   likes: 11,
-  dislikes: 0, 
+  dislikes: 0,
   comments: 21,
   shares: 2,
   views: 274,
