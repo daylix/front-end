@@ -14,71 +14,69 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        // Система фонових кольорів (глибока, але м'яка)
-        'base-100': '#242526',  // Картки та передній план
-        'base-200': '#1C1E21',  // Вторинний фон
-        'base-300': '#18191A',  // Основний фон
+        'base-100': '#1E1E1E',
+        'base-200': '#252526',
+        'base-300': '#2D2D2D',
 
-        // Система акцентних кольорів
+        // Primary accent colors (VS Code blue)
         'primary': {
-          'light': '#6E8FFA',   // Світліший акцент
-          DEFAULT: '#5B7AF7',    // Основний акцент
-          'dark': '#4865D6',     // Темніший акцент
-          'hover': '#4D69E5'     // Стан наведення
+          'light': '#75BEFF',
+          DEFAULT: '#0078D4',
+          'dark': '#005A9E',
+          'hover': '#0066B5'
         },
 
-        // Система текстових кольорів
+        // Text colors
         'text': {
-          'primary': '#E4E6EB',    // Основний текст
-          'secondary': '#B0B3B8',  // Другорядний текст
-          'muted': '#8A8D91',      // Приглушений текст
-          'link': '#6E8FFA',       // Посилання
+          'primary': '#D4D4D4',
+          'secondary': '#9D9D9D',
+          'muted': '#6E6E6E',
+          'link': '#4DC9FF',
         },
 
-        // Семантичні кольори
+        // Semantic colors
         'success': {
-          'light': '#43A047',
-          DEFAULT: '#388E3C',
-          'dark': '#2E7D32'
+          'light': '#89D185',
+          DEFAULT: '#388A34',
+          'dark': '#2D6A2D'
         },
         'warning': {
-          'light': '#FB8C00',
-          DEFAULT: '#F57C00',
-          'dark': '#EF6C00'
+          'light': '#CCA700',
+          DEFAULT: '#997000',
+          'dark': '#664900'
         },
         'error': {
-          'light': '#E57373',
-          DEFAULT: '#EF5350',
-          'dark': '#E53935'
+          'light': '#F48771',
+          DEFAULT: '#E51400',
+          'dark': '#A31515'
         },
         'info': {
-          'light': '#64B5F6',
-          DEFAULT: '#42A5F5',
-          'dark': '#2196F3'
+          'light': '#75BEFF',
+          DEFAULT: '#0078D4',
+          'dark': '#005A9E'
         },
 
-        // Системні кольори
+        // UI element colors
         'surface': {
           'overlay': 'rgba(0, 0, 0, 0.4)',
-          'hover': '#2D2F31',
-          'active': '#3A3B3C',
-          'disabled': '#3E4042'
+          'hover': '#2A2D2E',
+          'active': '#37373D',
+          'disabled': '#4D4D4D'
         },
 
-        // Кольори рамок
+        // Border colors
         'border': {
-          DEFAULT: '#3E4042',
-          'light': '#474A4D',
-          'focus': '#6E8FFA'
+          DEFAULT: '#454545',
+          'light': '#5A5A5A',
+          'focus': '#007FD4'
         }
       },
 
-      // Тіні для різних рівнів елементів
       boxShadow: {
-        'sm': '0 1px 2px rgba(0, 0, 0, 0.05)',
-        DEFAULT: '0 1px 3px rgba(0, 0, 0, 0.1), 0 1px 2px rgba(0, 0, 0, 0.06)',
-        'md': '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
-        'lg': '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)',
+        'sm': '0 2px 4px rgba(0, 0, 0, 0.18)',
+        DEFAULT: '0 2px 8px rgba(0, 0, 0, 0.24)',
+        'md': '0 4px 12px rgba(0, 0, 0, 0.3)',
+        'lg': '0 8px 24px rgba(0, 0, 0, 0.36)',
       },
     },
   },
@@ -89,43 +87,37 @@ module.exports = {
         dark: {
           ...require("daisyui/src/theming/themes")["dark"],
 
-          // Основні кольори
-          "base-100": "#242526",
-          "base-200": "#1C1E21",
-          "base-300": "#18191A",
+          // Base colors
+          "base-100": "#1E1E1E",
+          "base-200": "#252526",
+          "base-300": "#2D2D2D",
 
-          // Акцентні кольори
-          "primary": "#5B7AF7",
-          "primary-focus": "#4D69E5",
+          // Accent colors
+          "primary": "#0078D4",
+          "primary-focus": "#0066B5",
           "primary-content": "#FFFFFF",
 
-          // Нейтральні кольори
-          "neutral": "#3E4042",
-          "neutral-focus": "#474A4D",
-          "neutral-content": "#E4E6EB",
+          // Neutral colors
+          "neutral": "#37373D",
+          "neutral-focus": "#3E3E42",
+          "neutral-content": "#D4D4D4",
 
-          // Статусні кольори
-          "success": "#388E3C",
-          "warning": "#F57C00",
-          "error": "#EF5350",
-          "info": "#42A5F5",
+          // Status colors
+          "success": "#388A34",
+          "warning": "#997000",
+          "error": "#E51400",
+          "info": "#0078D4",
 
-          // Налаштування компонентів
-          "--rounded-box": "0.75rem",
-          "--rounded-btn": "0.5rem",
-          "--rounded-badge": "0.375rem",
-          "--animation-btn": "0.25s",
-          "--animation-input": "0.2s",
+          // Component settings
+          "--animation-btn": "0.1s",
+          "--animation-input": "0.1s",
           "--btn-text-case": "none",
-          "--btn-focus-scale": "0.97",
-          "--border-btn": "1.5px",
-          "--tab-border": "2px",
-          "--tab-radius": "0.5rem",
-
-          // Додаткові CSS змінні для компонентів
-          "--card-shadow": "0 2px 4px rgba(0, 0, 0, 0.1)",
-          "--input-shadow": "0 1px 2px rgba(0, 0, 0, 0.05)",
-          "--btn-shadow": "0 1px 3px rgba(0, 0, 0, 0.1)",
+          "--btn-focus-scale": "0.98",
+          "--tab-border": "1px",
+          "--tab-radius": "0.25rem",
+          "--card-shadow": "0 2px 8px rgba(0, 0, 0, 0.24)",
+          "--input-shadow": "0 1px 4px rgba(0, 0, 0, 0.18)",
+          "--btn-shadow": "0 1px 4px rgba(0, 0, 0, 0.18)",
         },
       },
     ],
