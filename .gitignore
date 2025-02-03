@@ -50,3 +50,6 @@ out
 .env.local
 .env.development
 .env.production
+*.production
+
+*.development
