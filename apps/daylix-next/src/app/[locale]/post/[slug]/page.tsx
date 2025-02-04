@@ -81,7 +81,7 @@ export default async function PostPage({ params: { locale, slug } }: PageProps) 
           {post.cover && (
             <div className="relative aspect-[16/9] overflow-hidden rounded-2xl">
               <Image
-                src={post.cover[0]?.url}
+                src={post.cover[0]?.url ?? ''}
                 alt={post.title}
                 fill
                 className="object-cover"
