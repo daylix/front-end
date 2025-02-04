@@ -1,5 +1,6 @@
 import { getRulesData } from './rules-api';
 import { ClientBlocksRenderer } from '@daylix/core';
+import CardContainer from '@daylix/card-container';
 
 export const dynamic = 'force-dynamic'
 export const revalidate = 0
@@ -11,12 +12,14 @@ export default async function RulesPage({ params }: { params: { locale: string }
 
   return (
     <main>
-      <section>
-        <div className="container mx-auto px-5 md:px-0 w-full md:w-10/12 lg:w-5/12 font-work">
-          <h3 className="text-base-content font-semibold text-xl md:text-2xl lg:text-4xl leading-5 md:leading-10 ">{rules.title}</h3>
-          <div className="mt-8">
-            <ClientBlocksRenderer content={rules.content} />
-          </div>
+      <section className="py-8 md:py-12">
+        <div className="container mx-auto px-5 md:px-0 font-work">
+          <CardContainer>
+            <h3 className="text-base-content font-semibold text-xl md:text-2xl lg:text-4xl leading-5 md:leading-10 ">{rules.title}</h3>
+            <div className="mt-4">
+              <ClientBlocksRenderer content={rules.content} />
+            </div>
+          </CardContainer>
         </div>
       </section>
     </main>
