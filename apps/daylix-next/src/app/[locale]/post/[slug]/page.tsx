@@ -1,9 +1,12 @@
 import { getPostData } from './post-api';
 import { ClientBlocksRenderer } from '@daylix/core';
-import { formatDistanceToNow } from 'date-fns';
-import { Heart, MessageSquare, Eye, ThumbsDown } from 'lucide-react';
+import { formatDistanceToNow, parseISO } from 'date-fns';
+import { Heart, MessageSquare, Eye, ThumbsDown, EyeIcon, MoreVertical, BookmarkIcon, Share2Icon } from 'lucide-react';
 import { Button } from '@daylix-ui/components';
 import CardContainer from '@daylix/card-container';
+import Link from 'next/link';
+import { ru, uk } from 'date-fns/locale';
+import Image from 'next/image';
 
 interface PageProps {
   params: {
@@ -15,6 +18,13 @@ interface PageProps {
 export default async function PostPage({ params: { locale, slug } }: PageProps) {
   const post = await getPostData(locale, slug);
 
+  let formattedDate = '';
+
+  if (post?.createdAt) {
+    const parsedDate = parseISO(post?.createdAt);
+    formattedDate = formatDistanceToNow(parsedDate, { addSuffix: true, locale: locale === 'ru' ? ru : uk });  
+  }
+
   if (!post) {
     return (
       <div className="container mx-auto px-6 py-8">
@@ -25,60 +35,79 @@ export default async function PostPage({ params: { locale, slug } }: PageProps) 
 
   return (
     <div className="container mx-auto px-6 py-8 max-w-4xl">
-      <CardContainer>
-        <article className="p-4">
-          <header className="mb-8">
-            <h1 className="text-3xl font-bold mb-4">{post.title}</h1>
-            <div className="flex items-center justify-between mb-6">
-              <div className="flex items-center gap-4">
-                <img 
-                  src={post.users_permissions_user?.avatar?.url || '/default-avatar.png'}
-                  alt={post.users_permissions_user?.username}
-                  className="w-10 h-10 rounded-full"
-                />
-                <div>
-                  <div className="font-medium">{post.users_permissions_user?.username}</div>
-                  <div className="text-sm text-gray-500">
-                    {formatDistanceToNow(new Date(post.createdAt), { addSuffix: true })}
-                  </div>
-                </div>
-              </div>
-              {post.categories?.[0] && (
-                <span className="px-3 py-1.5 bg-primary/10 text-primary rounded-md text-sm font-medium">
-                  {post.categories[0].name}
-                </span>
-              )}
+      <CardContainer className="bg-[#1a1a1a] text-gray-200 p-5 rounded-[24px]">
+        <article className="flex flex-col gap-6">
+          <header className="flex items-center gap-3">
+            <div className="relative h-12 w-12 overflow-hidden rounded-full border-2 border-gray-700">
+              <Image
+                src={post.users_permissions_user?.avatar?.url || '/default-avatar.png'}
+                alt={post.users_permissions_user?.username || ''}
+                fill
+                className="object-cover"
+              />
             </div>
+            <div className="flex flex-col">
+              <div className="flex items-center gap-2">
+                <span className="font-medium text-gray-100">{post.users_permissions_user?.username}</span>
+              </div>
+              <span className="text-sm text-gray-500">
+                {post.categories?.[0] && (
+                  <Link
+                    href={`/category/${post.categories[0].name}`}
+                    className="text-gray-400 hover:underline"
+                  >
+                    {post.categories[0].name}
+                  </Link>
+                )}
+                {post.categories?.[0] && " "}
+                {formattedDate}
+              </span>
+            </div>
+            <Button
+              color="ghost"
+              size="sm"
+              className="ml-auto text-gray-400 hover:text-gray-300"
+            >
+              <MoreVertical className="h-5 w-5" />
+            </Button>
           </header>
 
+          <div className="space-y-3">
+            <h1 className="text-[28px] font-semibold leading-tight text-gray-100">
+              {post.title}
+            </h1>
+          </div>
+
           {post.cover && (
-            <img 
-              src={post.cover[0]?.url}
-              alt={post.title}
-              className="w-full h-auto mb-8 rounded-lg object-cover"
-            />
+            <div className="relative aspect-[16/9] overflow-hidden rounded-2xl">
+              <Image
+                src={post.cover[0]?.url}
+                alt={post.title}
+                fill
+                className="object-cover"
+              />
+            </div>
           )}
 
-          <div className="prose prose-lg max-w-none mb-8">
+          <div className="text-gray-400 text-[15px] leading-relaxed">
             <ClientBlocksRenderer content={post.content} />
           </div>
 
-          <footer className="flex items-center gap-6 pt-6">
-            <Button size="sm" className="gap-2">
-              <Heart className="w-4 h-4" />
-              <span>{post.likes_count}</span>
-            </Button>
-            <Button size="sm" className="gap-2">
-              <ThumbsDown className="w-4 h-4" />
-              <span>{post.dislikes_count}</span>
-            </Button>
-            <Button size="sm" className="gap-2">
-              <MessageSquare className="w-4 h-4" />
-              <span>{post.comments_count}</span>
-            </Button>
-            <div className="flex items-center gap-2 ml-auto text-gray-500">
-              <Eye className="w-4 h-4" />
-              <span>{post.views_count}</span>
+          <footer className="flex items-center justify-between pt-2">
+            <div className="flex items-center gap-6">
+              <Button color="ghost" size="sm" className="text-gray-400 hover:text-gray-300">
+                <Heart className="h-5 w-5" />
+              </Button>
+              <Button color="ghost" size="sm" className="text-gray-400 hover:text-gray-300">
+                <ThumbsDown className="h-5 w-5" />
+              </Button>
+              <Button color="ghost" size="sm" className="text-gray-400 hover:text-gray-300">
+                <MessageSquare className="h-5 w-5" />
+              </Button>
+            </div>
+            <div className="flex items-center gap-2">
+              <EyeIcon className="h-5 w-5 text-gray-400" />
+              <span className="text-gray-400">255</span>
             </div>
           </footer>
         </article>

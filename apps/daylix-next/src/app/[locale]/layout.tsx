@@ -10,6 +10,9 @@ export const metadata = {
   description: 'Платформа для захоплених іграми, кіно, інноваціями, залізом, та технологіями.',
 };
 
+// This is needed to suppress hydration warnings from browser extensions
+export const dynamic = 'force-dynamic';
+
 export default async function LocaleLayout({
   children,
   params: {locale}
@@ -17,7 +20,8 @@ export default async function LocaleLayout({
   children: React.ReactNode;
   params: {locale: string};
 }) {
-  // Ensure that the incoming `locale` is valid
+  // Ensure that the incoming `locale` is valid<html lang={locale} suppressHydrationWarning>
+    <body className="bg-base-300" suppressHydrationWarning></body>
   if (!routing.locales.includes(locale as any)) {
     notFound();
   }
@@ -27,15 +31,15 @@ export default async function LocaleLayout({
   const messages = await getMessages();
 
   return (
-    <html lang={locale}>
-    <body className="bg-base-300">
-      <NextIntlClientProvider messages={messages}>
-        <Header />
-        <div className="max-w-7xl mx-auto">
-          {children}
-        </div>
-      </NextIntlClientProvider>
-    </body>
+    <html lang={locale} suppressHydrationWarning>
+      <body className="bg-base-300" suppressHydrationWarning>
+        <NextIntlClientProvider messages={messages}>
+          <Header />
+          <div className="max-w-7xl mx-auto">
+            {children}
+          </div>
+        </NextIntlClientProvider>
+      </body>
     </html>
   );
 }
