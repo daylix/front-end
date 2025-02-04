@@ -30,26 +30,6 @@ const nextConfig = {
       ? 'https://strapi.daylix.pro/graphql'
       : 'http://localhost:1337/graphql'
   },
-  async headers() {
-    return [
-      {
-        source: '/', // Home page
-        headers: [
-          { key: 'Cache-Control', value: 'no-store, no-cache, must-revalidate, proxy-revalidate' },
-          { key: 'Pragma', value: 'no-cache' },
-          { key: 'Expires', value: '0' },
-        ],
-      },
-      {
-        source: '/:locale/post/:slug',  // Post pages with dynamic locale and slug
-        headers: [
-          { key: 'Cache-Control', value: 'no-store, no-cache, must-revalidate, proxy-revalidate' },
-          { key: 'Pragma', value: 'no-cache' },
-          { key: 'Expires', value: '0' },
-        ],
-      },
-    ];
-  },
 };
 
 const plugins = [

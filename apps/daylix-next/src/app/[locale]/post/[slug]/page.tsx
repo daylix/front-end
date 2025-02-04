@@ -15,7 +15,7 @@ interface PageProps {
   };
 }
 
-export const dynamic = 'force-dynamic';
+export const fetchCache = 'force-no-store';
 
 export default async function PostPage({ params: { locale, slug } }: PageProps) {
   const post = await getPostData(locale, slug);
