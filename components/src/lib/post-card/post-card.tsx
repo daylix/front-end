@@ -1,31 +1,15 @@
 import React from 'react';
-import { Heart, MessageSquare, Eye, MoreVertical, ThumbsDown } from 'lucide-react';
+import { Heart, MoreVertical, Eye as EyeIcon, BookmarkIcon, Share2Icon, MessageSquare, SearchIcon, GiftIcon, ThumbsDown } from 'lucide-react';
 import { Button } from '@daylix-ui/components';
 import Link from 'next/link';
 import CardContainer from '../card-container';
 import { BlocksContent } from '@strapi/blocks-react-renderer';
 import { ClientBlocksRenderer } from '@daylix/core';
+import Image from 'next/image';
+import { formatDistanceToNow, parseISO } from 'date-fns';
+import { ru, uk } from 'date-fns/locale';
 
-// Old interfaces
-interface PostProps {
-  id: string;
-  avatar: string;
-  name: string;
-  category: string;
-  time: string;
-  title: string;
-  content: string | BlocksContent;
-  image?: string;
-  likes: number;
-  dislikes: number;
-  comments: number;
-  shares: number;
-  views: number;
-  locale: string;
-}
-
-// New interfaces for Strapi
-interface StrapiImage {
+interface Image {
   url: string;
 }
 
@@ -36,10 +20,10 @@ interface Category {
 interface User {
   username: string;
   email: string;
-  avatar: StrapiImage;
+  avatar: Image;
 }
 
-interface StrapiPostProps {
+interface PostProps {
   id: string;
   slug: string;
   avatar: string;
@@ -49,9 +33,9 @@ interface StrapiPostProps {
   content: BlocksContent;
   cover?: string;
   locale: string;
+  createdAt: any;
 }
 
-// Helper function to get preview from Strapi blocks content
 function getContentPreview(content: BlocksContent, maxLength: number = 150): BlocksContent {
   let textLength = 0;
   const previewBlocks = [];
@@ -83,107 +67,109 @@ function getContentPreview(content: BlocksContent, maxLength: number = 150): Blo
   return previewBlocks as BlocksContent;
 }
 
-// New component implementation with Strapi data
-const PostCard: React.FC<StrapiPostProps> = ({
+const PostCard: React.FC<PostProps> = ({
   id,
   slug,
   avatar,
   name,
-  category,
   title,
+  category,
   content,
   cover,
   locale,
+  createdAt
 }) => {
-  const contentPreview = getContentPreview(content);
+
+  const preview = getContentPreview(content);
+  const parsedDate = parseISO(createdAt);
+  const formattedDate = formatDistanceToNow(parsedDate, { addSuffix: true, locale: locale === 'ru' ? ru : uk });
 
   return (
-    <CardContainer>
-      {/* Header */}
-      <div className="flex flex-wrap items-start gap-3 sm:items-center">
-        <div className="avatar">
-          <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full">
-            <img 
-              src={avatar || '/default-avatar.png'} 
-              alt={name || 'User'} 
+    <CardContainer className="bg-[#1a1a1a] text-gray-200 p-5 rounded-[24px]">
+      <article className="flex flex-col gap-6">
+        {/* Header with avatar and category */}
+        <header className="flex items-center gap-3">
+          <div className="relative h-12 w-12 overflow-hidden rounded-full border-2 border-gray-700">
+            <Image
+              src={avatar}
+              alt={name}
+              fill
+              className="object-cover"
             />
           </div>
-        </div>
-        <div className="flex-1 min-w-[140px]">
-          <div className="flex flex-wrap items-center gap-2">
-            <h3 className="font-medium">{name}</h3>
-            {category && (
-              <>
-                <span className="text-gray-400">в</span>
+          <div className="flex flex-col">
+            <div className="flex items-center gap-2">
+              <span className="font-medium text-gray-100">{name}</span>
+            </div>
+            <span className="text-sm text-gray-500">
+              {category && (
                 <Link
                   href={`/category/${category}`}
-                  className="text-primary hover:underline"
+                  className="text-gray-400 hover:underline"
                 >
                   {category}
                 </Link>
-              </>
-            )}
+              )}
+              {category && " "}
+              {formattedDate}
+            </span>
           </div>
-          <div className="text-sm text-gray-400">
-            {/* Тут можна додати дату створення, якщо вона є в даних */}
-          </div>
-        </div>
-        <Button size="sm" className="ml-auto">
-          <MoreVertical className="h-4 w-4" />
-        </Button>
-      </div>
-
-      {/* Image */}
-      {cover && (
-        <div className="mt-4">
-          <img
-            src={cover}
-            alt={title}
-            className="w-full h-auto rounded-lg object-cover"
-          />
-        </div>
-      )}
-
-      {/* Content */}
-      <div className="mt-4">
-        <Link href={`/${locale}/post/${encodeURIComponent(slug)}`} className="hover:underline">
-          <h2 className="text-xl font-semibold mb-2">{title}</h2>
-        </Link>
-        <div className="prose prose-sm mb-4">
-          <ClientBlocksRenderer content={contentPreview} />
-        </div>
-        <Link 
-          href={`/${locale}/post/${encodeURIComponent(slug)}`}
-        >
-          <Button 
-            variant="outline" 
+          <Button
+            color="ghost"
             size="sm"
-            color='primary'
+            className="ml-auto text-gray-400 hover:text-gray-300"
           >
-            Читати далі...
+            <MoreVertical className="h-5 w-5" />
           </Button>
-        </Link>
-      </div>
+        </header>
 
-      {/* Footer */}
-      <div className="flex flex-wrap items-center gap-4 mt-4">
-        <Button size="sm" className="gap-2">
-          <Heart className="h-4 w-4" />
-          <span>0</span>
-        </Button>
-        <Button size="sm" className="gap-2">
-          <ThumbsDown className="h-4 w-4" />
-          <span>0</span>
-        </Button>
-        <Button size="sm" className="gap-2">
-          <MessageSquare className="h-4 w-4" />
-          <span>0</span>
-        </Button>
-        <div className="ml-auto flex items-center gap-2 text-gray-400">
-          <Eye className="h-4 w-4" />
-          <span>0</span>
-        </div>
-      </div>
+        <Link href={`/${locale}/post/${encodeURIComponent(slug)}`}>
+
+          {/* Title */}
+          <div className="space-y-3">
+            <h2 className="text-[28px] font-semibold leading-tight text-gray-100">
+              {title}
+            </h2>
+          </div>
+
+          {/* Content */}
+          <div className="text-gray-400 text-[15px] leading-relaxed">
+            <ClientBlocksRenderer content={preview} />
+          </div>
+
+          {/* Cover image */}
+          {cover && (
+            <div className="relative aspect-[16/9] overflow-hidden rounded-2xl">
+              <Image
+                src={cover}
+                alt={title}
+                fill
+                className="object-cover"
+              />
+            </div>
+          )}
+
+        </Link>
+
+        {/* Footer with interaction buttons */}
+        <footer className="flex items-center justify-between pt-2">
+          <div className="flex items-center gap-6">
+            <Button color="ghost" size="sm" className="text-gray-400 hover:text-gray-300">
+              <Heart className="h-5 w-5" />
+            </Button>
+            <Button color="ghost" size="sm" className="text-gray-400 hover:text-gray-300">
+              <ThumbsDown className="h-5 w-5" />
+            </Button>
+            <Button color="ghost" size="sm" className="text-gray-400 hover:text-gray-300">
+              <MessageSquare className="h-5 w-5" />
+            </Button>
+          </div>
+          <div className="flex items-center gap-2">
+            <EyeIcon className="h-5 w-5 text-gray-400" />
+            <span className="text-gray-400">255</span>
+          </div>
+        </footer>
+      </article>
     </CardContainer>
   );
 };

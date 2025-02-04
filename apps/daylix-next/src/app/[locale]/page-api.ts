@@ -9,6 +9,7 @@ export const GET_POSTS = gql`
       slug
       title
       content
+      createdAt
       cover {
         url
       }

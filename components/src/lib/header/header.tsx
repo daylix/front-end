@@ -6,15 +6,19 @@ import { Pencil } from 'lucide-react';
 import LocalSwitcher from '../local-switcher';
 import Sidebar from '../sidebar';
 import Link from 'next/link';
+import { useParams } from 'next/navigation';
 
 export function Header() {
   const t = useTranslations('homePage.navBar');
+  const params = useParams();
+  const locale = params?.locale as string || 'uk';
+
   return (
     <div className="bg-base-100">
       <Navbar className="max-w-7xl mx-auto">
         <Navbar.Start>
           <Sidebar />
-          <Link href="/">
+          <Link href={`/${locale}`}>
             <img
               className="w-auto"
               src="/daylix_logo.svg"
