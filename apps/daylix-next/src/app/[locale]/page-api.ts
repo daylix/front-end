@@ -4,7 +4,7 @@ import { GetPostsQuery, GetPostsQueryVariables } from '@daylix/core/graphql/gene
 
 export const GET_POSTS = gql`
   query GetPosts($locale: I18NLocaleCode!) {
-    posts(locale: $locale) {
+    posts(locale: $locale, sort: "createdAt:desc") {
       documentId
       slug
       title
