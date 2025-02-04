@@ -585,8 +585,10 @@ export type Post = {
   readonly publishedAt?: Maybe<Scalars['DateTime']['output']>;
   readonly reactions: ReadonlyArray<Maybe<Reaction>>;
   readonly reactions_connection?: Maybe<ReactionRelationResponseCollection>;
+  readonly slug: Scalars['String']['output'];
   readonly title: Scalars['String']['output'];
   readonly updatedAt?: Maybe<Scalars['DateTime']['output']>;
+  readonly users_permissions_user?: Maybe<UsersPermissionsUser>;
 };
 
 
@@ -663,8 +665,10 @@ export type PostFiltersInput = {
   readonly or?: InputMaybe<ReadonlyArray<InputMaybe<PostFiltersInput>>>;
   readonly publishedAt?: InputMaybe<DateTimeFilterInput>;
   readonly reactions?: InputMaybe<ReactionFiltersInput>;
+  readonly slug?: InputMaybe<StringFilterInput>;
   readonly title?: InputMaybe<StringFilterInput>;
   readonly updatedAt?: InputMaybe<DateTimeFilterInput>;
+  readonly users_permissions_user?: InputMaybe<UsersPermissionsUserFiltersInput>;
 };
 
 export type PostInput = {
@@ -673,7 +677,9 @@ export type PostInput = {
   readonly cover?: InputMaybe<ReadonlyArray<InputMaybe<Scalars['ID']['input']>>>;
   readonly publishedAt?: InputMaybe<Scalars['DateTime']['input']>;
   readonly reactions?: InputMaybe<ReadonlyArray<InputMaybe<Scalars['ID']['input']>>>;
+  readonly slug?: InputMaybe<Scalars['String']['input']>;
   readonly title?: InputMaybe<Scalars['String']['input']>;
+  readonly users_permissions_user?: InputMaybe<Scalars['ID']['input']>;
 };
 
 export type PostRelationResponseCollection = {
@@ -1347,6 +1353,8 @@ export type UsersPermissionsUser = {
   readonly createdAt?: Maybe<Scalars['DateTime']['output']>;
   readonly documentId: Scalars['ID']['output'];
   readonly email: Scalars['String']['output'];
+  readonly posts: ReadonlyArray<Maybe<Post>>;
+  readonly posts_connection?: Maybe<PostRelationResponseCollection>;
   readonly provider?: Maybe<Scalars['String']['output']>;
   readonly publishedAt?: Maybe<Scalars['DateTime']['output']>;
   readonly reactions: ReadonlyArray<Maybe<Reaction>>;
@@ -1354,6 +1362,20 @@ export type UsersPermissionsUser = {
   readonly role?: Maybe<UsersPermissionsRole>;
   readonly updatedAt?: Maybe<Scalars['DateTime']['output']>;
   readonly username: Scalars['String']['output'];
+};
+
+
+export type UsersPermissionsUserPostsArgs = {
+  filters?: InputMaybe<PostFiltersInput>;
+  pagination?: InputMaybe<PaginationArg>;
+  sort?: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
+};
+
+
+export type UsersPermissionsUserPosts_ConnectionArgs = {
+  filters?: InputMaybe<PostFiltersInput>;
+  pagination?: InputMaybe<PaginationArg>;
+  sort?: InputMaybe<ReadonlyArray<InputMaybe<Scalars['String']['input']>>>;
 };
 
 
@@ -1390,6 +1412,7 @@ export type UsersPermissionsUserFiltersInput = {
   readonly email?: InputMaybe<StringFilterInput>;
   readonly not?: InputMaybe<UsersPermissionsUserFiltersInput>;
   readonly or?: InputMaybe<ReadonlyArray<InputMaybe<UsersPermissionsUserFiltersInput>>>;
+  readonly posts?: InputMaybe<PostFiltersInput>;
   readonly provider?: InputMaybe<StringFilterInput>;
   readonly publishedAt?: InputMaybe<DateTimeFilterInput>;
   readonly reactions?: InputMaybe<ReactionFiltersInput>;
@@ -1404,6 +1427,7 @@ export type UsersPermissionsUserInput = {
   readonly confirmed?: InputMaybe<Scalars['Boolean']['input']>;
   readonly email?: InputMaybe<Scalars['String']['input']>;
   readonly password?: InputMaybe<Scalars['String']['input']>;
+  readonly posts?: InputMaybe<ReadonlyArray<InputMaybe<Scalars['ID']['input']>>>;
   readonly provider?: InputMaybe<Scalars['String']['input']>;
   readonly publishedAt?: InputMaybe<Scalars['DateTime']['input']>;
   readonly reactions?: InputMaybe<ReadonlyArray<InputMaybe<Scalars['ID']['input']>>>;
@@ -1423,13 +1447,20 @@ export type GetAboutQueryVariables = Exact<{
 
 export type GetAboutQuery = { readonly __typename?: 'Query', readonly about?: { readonly __typename?: 'About', readonly title: string, readonly content: any } | null };
 
-export type GetPostQueryVariables = Exact<{
+export type GetPostsQueryVariables = Exact<{
   locale: Scalars['I18NLocaleCode']['input'];
-  documentId: Scalars['ID']['input'];
 }>;
 
 
-export type GetPostQuery = { readonly __typename?: 'Query', readonly post?: { readonly __typename?: 'Post', readonly documentId: string, readonly title: string, readonly content: any, readonly createdAt?: any | null, readonly cover: ReadonlyArray<{ readonly __typename?: 'UploadFile', readonly url: string } | null>, readonly categories: ReadonlyArray<{ readonly __typename?: 'Category', readonly name: string } | null>, readonly reactions: ReadonlyArray<{ readonly __typename?: 'Reaction', readonly type: Enum_Reaction_Type } | null> } | null };
+export type GetPostsQuery = { readonly __typename?: 'Query', readonly posts: ReadonlyArray<{ readonly __typename?: 'Post', readonly documentId: string, readonly slug: string, readonly title: string, readonly content: any, readonly cover: ReadonlyArray<{ readonly __typename?: 'UploadFile', readonly url: string } | null>, readonly users_permissions_user?: { readonly __typename?: 'UsersPermissionsUser', readonly username: string, readonly email: string, readonly avatar?: { readonly __typename?: 'UploadFile', readonly url: string } | null } | null, readonly categories: ReadonlyArray<{ readonly __typename?: 'Category', readonly name: string } | null> } | null> };
+
+export type GetPostQueryVariables = Exact<{
+  locale: Scalars['I18NLocaleCode']['input'];
+  slug: Scalars['String']['input'];
+}>;
+
+
+export type GetPostQuery = { readonly __typename?: 'Query', readonly posts: ReadonlyArray<{ readonly __typename?: 'Post', readonly title: string, readonly content: any, readonly createdAt?: any | null, readonly cover: ReadonlyArray<{ readonly __typename?: 'UploadFile', readonly url: string } | null>, readonly users_permissions_user?: { readonly __typename?: 'UsersPermissionsUser', readonly username: string, readonly email: string, readonly avatar?: { readonly __typename?: 'UploadFile', readonly url: string } | null } | null, readonly categories: ReadonlyArray<{ readonly __typename?: 'Category', readonly name: string } | null> } | null> };
 
 export type GetRulesQueryVariables = Exact<{
   locale: Scalars['I18NLocaleCode']['input'];

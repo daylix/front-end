@@ -6,6 +6,7 @@ import CardContainer from '../card-container';
 import { BlocksContent } from '@strapi/blocks-react-renderer';
 import { ClientBlocksRenderer } from '@daylix/core';
 
+// Old interfaces
 interface PostProps {
   id: string;
   avatar: string;
@@ -23,116 +24,164 @@ interface PostProps {
   locale: string;
 }
 
-const PostCard: React.FC<PostProps> = ({
+// New interfaces for Strapi
+interface StrapiImage {
+  url: string;
+}
+
+interface Category {
+  name: string;
+}
+
+interface User {
+  username: string;
+  email: string;
+  avatar: StrapiImage;
+}
+
+interface StrapiPostProps {
+  id: string;
+  slug: string;
+  avatar: string;
+  name: string;
+  title: string;
+  category: string;
+  content: BlocksContent;
+  cover?: string;
+  locale: string;
+}
+
+// Helper function to get preview from Strapi blocks content
+function getContentPreview(content: BlocksContent, maxLength: number = 150): BlocksContent {
+  let textLength = 0;
+  const previewBlocks = [];
+
+  for (const block of content) {
+    if (textLength >= maxLength) break;
+
+    if (block.type === 'paragraph') {
+      const text = block.children
+        .filter(child => typeof child === 'object' && 'text' in child)
+        .map(child => (typeof child === 'object' && 'text' in child) ? child.text : '')
+        .join('');
+
+      if (textLength + text.length <= maxLength) {
+        previewBlocks.push(block);
+        textLength += text.length;
+      } else {
+        const remainingLength = maxLength - textLength;
+        const truncatedText = text.slice(0, remainingLength) + '...';
+        previewBlocks.push({
+          type: 'paragraph',
+          children: [{ type: 'text' as const, text: truncatedText }]
+        });
+        break;
+      }
+    }
+  }
+
+  return previewBlocks as BlocksContent;
+}
+
+// New component implementation with Strapi data
+const PostCard: React.FC<StrapiPostProps> = ({
   id,
+  slug,
   avatar,
   name,
   category,
-  time,
   title,
   content,
-  image,
-  likes,
-  dislikes,
-  comments,
-  views,
+  cover,
   locale,
 }) => {
+  const contentPreview = getContentPreview(content);
+
   return (
     <CardContainer>
       {/* Header */}
       <div className="flex flex-wrap items-start gap-3 sm:items-center">
         <div className="avatar">
           <div className="w-10 h-10 sm:w-12 sm:h-12 rounded-full">
-            <img src={avatar} alt={name} />
+            <img 
+              src={avatar || '/default-avatar.png'} 
+              alt={name || 'User'} 
+            />
           </div>
         </div>
         <div className="flex-1 min-w-[140px]">
           <div className="flex flex-wrap items-center gap-2">
-            <h3 className="font-bold text-base sm:text-lg">{name}</h3>
-            {/* Category badge */}
-            <span className="text-xs sm:text-sm opacity-70">{category}</span>
-          </div>
-          <p className="text-xs sm:text-sm opacity-50">{time}</p>
-        </div>
-        <div className="flex items-center gap-2 ml-auto">
-          <Button
-            color="primary"
-            size="sm"
-            className="justify-center"
-          >
-            Підписатися
-          </Button>
-          <div className="dropdown dropdown-end">
-            <Button
-              color="ghost"
-              shape="circle"
-              size="sm"
-              className="justify-center"
-              startIcon={<MoreVertical className="w-5 h-5 sm:w-6 sm:h-6" />}
-            />
-          </div>
-        </div>
-      </div>
-
-      {/* Content */}
-      <Link href={`/${locale}/posts/${id}`} className="block mt-3 sm:mt-4">
-        <h2 className="text-xl sm:text-2xl font-bold mb-2">{title}</h2>
-        <div>
-          <div className="text-base sm:text-lg line-clamp-3">
-            {typeof content === 'string' ? (
-              <p>{content}</p>
-            ) : (
-              <ClientBlocksRenderer content={content} />
+            <h3 className="font-medium">{name}</h3>
+            {category && (
+              <>
+                <span className="text-gray-400">в</span>
+                <Link
+                  href={`/category/${category}`}
+                  className="text-primary hover:underline"
+                >
+                  {category}
+                </Link>
+              </>
             )}
           </div>
-
-          {/* Image */}
-          {image && (
-            <div className="mt-3 sm:mt-4 rounded-lg overflow-hidden">
-              <img src={image} alt="Post content" className="w-full object-cover" />
-            </div>
-          )}
+          <div className="text-sm text-gray-400">
+            {/* Тут можна додати дату створення, якщо вона є в даних */}
+          </div>
         </div>
-      </Link>
-
-      {/* Interaction buttons */}
-      <div className="flex items-center gap-2 sm:gap-4 mt-3 sm:mt-4">
-        <div className="flex flex-wrap items-center gap-1 sm:gap-2">
-          <Button
-            color="ghost"
-            size="sm"
-            className="justify-center"
-            startIcon={<Heart className="w-4 h-4 sm:w-5 sm:h-5" />}
-          >
-            {likes > 0 && <span className="text-xs sm:text-sm">{likes}</span>}
-          </Button>
-          <Button
-            color="ghost"
-            size="sm"
-            className="justify-center"
-            startIcon={<ThumbsDown className="w-4 h-4 sm:w-5 sm:h-5" />}
-          >
-            {dislikes > 0 && <span className="text-xs sm:text-sm">{dislikes}</span>}
-          </Button>
-        </div>
+        <Button size="sm" className="ml-auto">
+          <MoreVertical className="h-4 w-4" />
+        </Button>
       </div>
 
-      {/* Stats */}
-      <div className="flex items-center gap-3 sm:gap-4 mt-2 text-xs sm:text-sm opacity-70">
-        <div className="flex items-center gap-1 sm:gap-2">
-          <Button
-            color="ghost"
-            size="sm"
-            className="justify-center"
-            startIcon={<MessageSquare className="w-4 h-4 sm:w-5 sm:h-5" />}
-          >
-            {comments > 0 && <span>{comments}</span>}
-          </Button>
+      {/* Image */}
+      {cover && (
+        <div className="mt-4">
+          <img
+            src={cover}
+            alt={title}
+            className="w-full h-auto rounded-lg object-cover"
+          />
         </div>
-        <div className="flex items-center gap-1 sm:gap-2 ml-auto">
-          <Eye className="w-4 h-4 sm:w-5 sm:h-5" />
-          {views > 0 && views}
+      )}
+
+      {/* Content */}
+      <div className="mt-4">
+        <Link href={`/${locale}/post/${encodeURIComponent(slug)}`} className="hover:underline">
+          <h2 className="text-xl font-semibold mb-2">{title}</h2>
+        </Link>
+        <div className="prose prose-sm mb-4">
+          <ClientBlocksRenderer content={contentPreview} />
+        </div>
+        <Link 
+          href={`/${locale}/post/${encodeURIComponent(slug)}`}
+        >
+          <Button 
+            variant="outline" 
+            size="sm"
+            color='primary'
+          >
+            Читати далі...
+          </Button>
+        </Link>
+      </div>
+
+      {/* Footer */}
+      <div className="flex flex-wrap items-center gap-4 mt-4">
+        <Button size="sm" className="gap-2">
+          <Heart className="h-4 w-4" />
+          <span>0</span>
+        </Button>
+        <Button size="sm" className="gap-2">
+          <ThumbsDown className="h-4 w-4" />
+          <span>0</span>
+        </Button>
+        <Button size="sm" className="gap-2">
+          <MessageSquare className="h-4 w-4" />
+          <span>0</span>
+        </Button>
+        <div className="ml-auto flex items-center gap-2 text-gray-400">
+          <Eye className="h-4 w-4" />
+          <span>0</span>
         </div>
       </div>
     </CardContainer>
