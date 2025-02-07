@@ -2,7 +2,12 @@ import { getAboutData } from './about-api';
 import { ClientBlocksRenderer } from '@daylix/core';
 import CardContainer from '@daylix/card-container';
 
-export const revalidate = 60;
+export async function generateStaticParams() {
+  return [
+    { locale: 'uk' },
+    { locale: 'ru' }
+  ];
+}
 
 export default async function AboutPage({ params }: { params: { locale: string } }) {
   const about = await getAboutData(params.locale);

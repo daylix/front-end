@@ -2,7 +2,12 @@ import { getRulesData } from './rules-api';
 import { ClientBlocksRenderer } from '@daylix/core';
 import CardContainer from '@daylix/card-container';
 
-export const revalidate = 60;
+export async function generateStaticParams() {
+  return [
+    { locale: 'uk' },
+    { locale: 'ru' }
+  ];
+}
 
 export default async function RulesPage({ params }: { params: { locale: string } }) {
   const rules = await getRulesData(params.locale);
