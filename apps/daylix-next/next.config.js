@@ -14,7 +14,6 @@ const nextConfig = {
     // See: https://github.com/gregberge/svgr
     svgr: false,
   },
-  output: 'export',  // Enable static export
   experimental: {
     serverComponentsExternalPackages: ["graphql"],
   },
@@ -30,11 +29,7 @@ const nextConfig = {
     NEXT_PUBLIC_API_URL: process.env.NODE_ENV === 'production' 
       ? 'https://strapi.daylix.pro/graphql'
       : 'http://localhost:1337/graphql'
-  },
-  i18n: {
-    locales: ['en'],
-    defaultLocale: 'en',
-  },
+  }
 };
 
 const plugins = [

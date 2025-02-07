@@ -30,10 +30,7 @@ export const GET_POSTS = gql`
 export async function getPostsData(locale: string) {
   const { data } = await client.query<GetPostsQuery, GetPostsQueryVariables>({
     query: GET_POSTS,
-    variables: {
-      locale,
-    },
+    variables: { locale }
   });
-
   return data.posts;
 }
