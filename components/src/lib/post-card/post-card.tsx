@@ -1,5 +1,5 @@
 import React from 'react';
-import { Heart, MoreVertical, Eye as EyeIcon, BookmarkIcon, Share2Icon, MessageSquare, SearchIcon, GiftIcon, ThumbsDown } from 'lucide-react';
+import { Heart, MoreVertical, Eye as EyeIcon, MessageSquare, ThumbsDown } from 'lucide-react';
 import { Button } from '@daylix-ui/components';
 import Link from 'next/link';
 import CardContainer from '../card-container';
@@ -8,20 +8,6 @@ import { ClientBlocksRenderer } from '@daylix/core';
 import Image from 'next/image';
 import { formatDistanceToNow, parseISO } from 'date-fns';
 import { ru, uk } from 'date-fns/locale';
-
-interface Image {
-  url: string;
-}
-
-interface Category {
-  name: string;
-}
-
-interface User {
-  username: string;
-  email: string;
-  avatar: Image;
-}
 
 interface PostProps {
   id: string;
@@ -36,7 +22,7 @@ interface PostProps {
   createdAt: any;
 }
 
-function getContentPreview(content: BlocksContent, maxLength: number = 150): BlocksContent {
+function getContentPreview(content: BlocksContent, maxLength = 150): BlocksContent {
   let textLength = 0;
   const previewBlocks = [];
 
@@ -123,7 +109,10 @@ const PostCard: React.FC<PostProps> = ({
           </Button>
         </header>
 
-        <Link href={`/${locale}/post/${encodeURIComponent(slug)}`}>
+        <Link 
+        href={`/${locale}/post/${encodeURIComponent(slug)}`} 
+        scroll={true}
+        prefetch={true}>
 
           {/* Title */}
           <div className="space-y-3">

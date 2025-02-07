@@ -1,6 +1,6 @@
 import { gql } from '@apollo/client';
-import { client } from '@daylix/core';
-import { GetPostQuery, GetPostQueryVariables } from '@daylix/core/graphql/generated';
+import client from '../graphql/client';
+import { GetPostQuery, GetPostQueryVariables, Post } from '../graphql/generated';
 
 export const GET_POST = gql`
   query GetPost($locale: I18NLocaleCode!, $slug: String!) {
@@ -26,7 +26,7 @@ export const GET_POST = gql`
   }
 `;
 
-export async function getPostData(locale: string, slug: string) {  
+export async function GetPostDataAccess(locale: string, slug: string) {  
   const { data } = await client.query<GetPostQuery, GetPostQueryVariables>({
     query: GET_POST,
     variables: {
@@ -41,17 +41,5 @@ export async function getPostData(locale: string, slug: string) {
 
   const post = data.posts[0];
   
-  return {
-    title: post.title,
-    content: post.content,
-    cover: post.cover,
-    users_permissions_user: post.users_permissions_user,
-    categories: post.categories,
-    locale,
-    createdAt: post.createdAt,
-    likes_count: 0,
-    dislikes_count: 0,
-    comments_count: 0,
-    views_count: 0
-  };
+  return post as Post;
 }

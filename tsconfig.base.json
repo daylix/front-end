@@ -15,9 +15,12 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@daylix/components": ["components/src/index.ts"],
       "@daylix/core": ["core/src/index.ts"],
       "@daylix/core/graphql/generated": ["core/src/lib/graphql/generated"],
-      "@daylix-ui/components": ["daylix-ui/src/lib/components/index.ts"],
+      "@daylix/core/utils": ["core/src/lib/utils"],
+      "@daylix/core/data-access": ["core/src/lib/data-access/index.ts"],
+      "@daylix-ui/components": ["daylix-ui/src/lib/components/"],
       "@daylix-ui/hooks": ["daylix-ui/src/lib/hooks/index.ts"],
       "@daylix/*": ["components/src/lib/*"]
     }

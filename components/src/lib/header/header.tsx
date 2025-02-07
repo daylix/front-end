@@ -6,6 +6,7 @@ import { Pencil } from 'lucide-react';
 import LocalSwitcher from '../local-switcher';
 import Sidebar from '../sidebar';
 import Link from 'next/link';
+import Image from 'next/image';
 import { useParams } from 'next/navigation';
 
 export function Header() {
@@ -19,10 +20,13 @@ export function Header() {
         <Navbar.Start>
           <Sidebar />
           <Link href={`/${locale}`}>
-            <img
+            <Image
               className="w-auto"
               src="/daylix_logo.svg"
               alt="daylix.pro logo"
+              width={150}
+              height={40}
+              priority
             />
           </Link>
         </Navbar.Start>

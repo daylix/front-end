@@ -16,7 +16,7 @@ export default async function RulesPage({ params }: { params: { locale: string }
 
   return (
     <main>
-      <section className="py-8 md:py-12">
+      <section className="py-4 md:py-12">
         <div className="container mx-auto px-5 md:px-0 font-work">
           <CardContainer>
             <h3 className="text-base-content font-semibold text-xl md:text-2xl lg:text-4xl leading-5 md:leading-10 ">{rules.title}</h3>
