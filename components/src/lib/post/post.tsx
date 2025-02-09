@@ -3,7 +3,7 @@
 import { ClientBlocksRenderer } from '@daylix/core';
 import { formatDistanceToNow, parseISO } from 'date-fns';
 import { Heart, MessageSquare, Eye, ThumbsDown, EyeIcon, MoreVertical } from 'lucide-react';
-import { Button } from '@daylix-ui/components';
+import { Avatar, Button } from '@daylix-ui/components';
 import Link from 'next/link';
 import { ru, uk } from 'date-fns/locale';
 import Image from 'next/image';
@@ -22,7 +22,7 @@ export default function Post({ locale, slug, initialData }: PostProps) {
   const { data: post, error, isLoading } = useSWR(
     ['post', locale, slug],
     () => GetPostDataAccess(locale, slug),
-    { 
+    {
       fallbackData: initialData,
       revalidateOnFocus: false,
       suspense: false
@@ -32,12 +32,12 @@ export default function Post({ locale, slug, initialData }: PostProps) {
   let formattedDate = '';
   if (post?.createdAt) {
     const parsedDate = parseISO(post.createdAt);
-    formattedDate = formatDistanceToNow(parsedDate, { addSuffix: true, locale: locale === 'ru' ? ru : uk });  
+    formattedDate = formatDistanceToNow(parsedDate, { addSuffix: true, locale: locale === 'ru' ? ru : uk });
   }
 
   if (isLoading && !initialData) {
     return (
-      <div className="container mx-auto px-6 max-w-4xl">
+      <div className="container mx-auto max-w-4xl">
         <CardContainer className="bg-[#1a1a1a] text-gray-200 p-5 rounded-[24px]">
           <div className="animate-pulse">
             <div className="flex items-center gap-3">
@@ -64,7 +64,7 @@ export default function Post({ locale, slug, initialData }: PostProps) {
 
   if (error) {
     return (
-      <div className="container mx-auto px-6">
+      <div className="container mx-auto">
         <CardContainer className="bg-[#1a1a1a] text-gray-200 p-5 rounded-[24px]">
           <div className="text-center">
             <div className="text-red-500 mb-2">Помилка завантаження поста</div>
@@ -77,7 +77,7 @@ export default function Post({ locale, slug, initialData }: PostProps) {
 
   if (!post) {
     return (
-      <div className="container mx-auto px-6">
+      <div className="container mx-auto">
         <CardContainer className="bg-[#1a1a1a] text-gray-200 p-5 rounded-[24px]">
           <div className="text-center">
             <h1 className="text-2xl font-bold text-gray-200">Пост не знайдено</h1>
@@ -88,18 +88,19 @@ export default function Post({ locale, slug, initialData }: PostProps) {
   }
 
   return (
-    <div className="container mx-auto px-6 max-w-4xl">
+    <div className="container mx-auto max-w-4xl">
       <CardContainer className="bg-[#1a1a1a] text-gray-200 p-5 rounded-[24px]">
         <article className="flex flex-col gap-6">
           <header className="flex items-center gap-3">
-            <div className="relative h-12 w-12 overflow-hidden rounded-full border-2 border-gray-700">
-              <Image
-                src={post.users_permissions_user?.avatar?.url || '/default-avatar.png'}
-                alt={post.users_permissions_user?.username || ''}
-                fill
-                className="object-cover"
+            <Avatar 
+                src={post.users_permissions_user?.avatar?.url} 
+                letters={!post.users_permissions_user?.avatar?.url ? post.users_permissions_user?.username.charAt(0).toUpperCase() : undefined}
+                border={true}
+                borderColor="primary"
+                color="neutral"
+                shape="circle" 
+                size="sm" 
               />
-            </div>
             <div className="flex flex-col">
               <div className="flex items-center gap-2">
                 <span className="font-medium text-gray-100">{post.users_permissions_user?.username}</span>

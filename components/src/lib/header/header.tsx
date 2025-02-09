@@ -27,6 +27,7 @@ export function Header() {
               width={150}
               height={40}
               priority
+              unoptimized
             />
           </Link>
         </Navbar.Start>

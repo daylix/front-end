@@ -15,7 +15,7 @@ export default async function Page({ params: { locale, slug } }: PageProps) {
 
   return (
     <section className="w-full min-h-screen">
-      <div className="container relative flex flex-col min-h-screen px-6 py-4 mx-auto">
+      <div className="container relative flex flex-col min-h-screen px-4 py-4 mx-auto">
         <Post locale={locale} slug={slug} initialData={initialData as PostType} />
       </div>
     </section>

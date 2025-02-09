@@ -1,13 +1,21 @@
-import React from 'react';
-import { Heart, MoreVertical, Eye as EyeIcon, MessageSquare, ThumbsDown } from 'lucide-react';
-import { Button } from '@daylix-ui/components';
+'use client';
+
+import React, { useState } from 'react';
+import {
+  Heart,
+  MoreVertical,
+  Eye as EyeIcon,
+  MessageSquare,
+  ThumbsDown,
+} from 'lucide-react';
+import { Button, Avatar } from '@daylix-ui/components';
 import Link from 'next/link';
 import CardContainer from '../card-container';
 import { BlocksContent } from '@strapi/blocks-react-renderer';
-import { ClientBlocksRenderer } from '@daylix/core';
 import Image from 'next/image';
 import { formatDistanceToNow, parseISO } from 'date-fns';
 import { ru, uk } from 'date-fns/locale';
+import { ClientBlocksRenderer } from '@daylix/core';
 
 interface PostProps {
   id: string;
@@ -22,7 +30,10 @@ interface PostProps {
   createdAt: any;
 }
 
-function getContentPreview(content: BlocksContent, maxLength = 150): BlocksContent {
+function getContentPreview(
+  content: BlocksContent,
+  maxLength = 150
+): BlocksContent {
   let textLength = 0;
   const previewBlocks = [];
 
@@ -31,8 +42,10 @@ function getContentPreview(content: BlocksContent, maxLength = 150): BlocksConte
 
     if (block.type === 'paragraph') {
       const text = block.children
-        .filter(child => typeof child === 'object' && 'text' in child)
-        .map(child => (typeof child === 'object' && 'text' in child) ? child.text : '')
+        .filter((child) => typeof child === 'object' && 'text' in child)
+        .map((child) =>
+          typeof child === 'object' && 'text' in child ? child.text : ''
+        )
         .join('');
 
       if (textLength + text.length <= maxLength) {
@@ -43,7 +56,7 @@ function getContentPreview(content: BlocksContent, maxLength = 150): BlocksConte
         const truncatedText = text.slice(0, remainingLength) + '...';
         previewBlocks.push({
           type: 'paragraph',
-          children: [{ type: 'text' as const, text: truncatedText }]
+          children: [{ type: 'text' as const, text: truncatedText }],
         });
         break;
       }
@@ -54,7 +67,6 @@ function getContentPreview(content: BlocksContent, maxLength = 150): BlocksConte
 }
 
 const PostCard: React.FC<PostProps> = ({
-  id,
   slug,
   avatar,
   name,
@@ -63,26 +75,31 @@ const PostCard: React.FC<PostProps> = ({
   content,
   cover,
   locale,
-  createdAt
+  createdAt,
 }) => {
-
   const preview = getContentPreview(content);
   const parsedDate = parseISO(createdAt);
-  const formattedDate = formatDistanceToNow(parsedDate, { addSuffix: true, locale: locale === 'ru' ? ru : uk });
+  const formattedDate = formatDistanceToNow(parsedDate, {
+    addSuffix: true,
+    locale: locale === 'ru' ? ru : uk,
+  });
+
+  const [isImageLoaded, setIsImageLoaded] = useState(false);
 
   return (
     <CardContainer className="bg-[#1a1a1a] text-gray-200 p-5 rounded-[24px]">
       <article className="flex flex-col gap-6">
         {/* Header with avatar and category */}
         <header className="flex items-center gap-3">
-          <div className="relative h-12 w-12 overflow-hidden rounded-full border-2 border-gray-700">
-            <Image
-              src={avatar}
-              alt={name}
-              fill
-              className="object-cover"
-            />
-          </div>
+          <Avatar 
+            src={avatar} 
+            letters={!avatar ? name.charAt(0).toUpperCase() : undefined}
+            border={true}
+            borderColor="primary"
+            color="neutral"
+            shape="circle" 
+            size="sm" 
+          />
           <div className="flex flex-col">
             <div className="flex items-center gap-2">
               <span className="font-medium text-gray-100">{name}</span>
@@ -96,7 +113,7 @@ const PostCard: React.FC<PostProps> = ({
                   {category}
                 </Link>
               )}
-              {category && " "}
+              {category && ' '}
               {formattedDate}
             </span>
           </div>
@@ -109,11 +126,11 @@ const PostCard: React.FC<PostProps> = ({
           </Button>
         </header>
 
-        <Link 
-        href={`/${locale}/post/${encodeURIComponent(slug)}`} 
-        scroll={true}
-        prefetch={true}>
-
+        <Link
+          href={`/${locale}/post/${encodeURIComponent(slug)}`}
+          scroll={true}
+          prefetch={true}
+        >
           {/* Title */}
           <div className="space-y-3">
             <h2 className="text-[28px] font-semibold leading-tight text-gray-100">
@@ -128,28 +145,49 @@ const PostCard: React.FC<PostProps> = ({
 
           {/* Cover image */}
           {cover && (
-            <div className="relative aspect-[16/9] overflow-hidden rounded-2xl">
+            <div className="w-full aspect-[16/9] rounded-2xl overflow-hidden relative">
+              {!isImageLoaded && (
+                <div className="absolute inset-0 bg-gradient-to-r from-gray-800 to-gray-700 animate-pulse" />
+              )}
+
               <Image
                 src={cover}
                 alt={title}
-                fill
-                className="object-cover"
+                width={600}
+                height={330}
+                className={`w-full h-full object-cover transition-opacity duration-500
+                  ${isImageLoaded ? 'opacity-100' : 'opacity-0'}`}
+                loading="lazy"
+                sizes="(max-width: 600px) 100vw, 600px"
+                onLoad={() => setIsImageLoaded(true)}
+                quality={85}
               />
             </div>
           )}
-
         </Link>
 
         {/* Footer with interaction buttons */}
         <footer className="flex items-center justify-between pt-2">
           <div className="flex items-center gap-6">
-            <Button color="ghost" size="sm" className="text-gray-400 hover:text-gray-300">
+            <Button
+              color="ghost"
+              size="sm"
+              className="text-gray-400 hover:text-gray-300"
+            >
               <Heart className="h-5 w-5" />
             </Button>
-            <Button color="ghost" size="sm" className="text-gray-400 hover:text-gray-300">
+            <Button
+              color="ghost"
+              size="sm"
+              className="text-gray-400 hover:text-gray-300"
+            >
               <ThumbsDown className="h-5 w-5" />
             </Button>
-            <Button color="ghost" size="sm" className="text-gray-400 hover:text-gray-300">
+            <Button
+              color="ghost"
+              size="sm"
+              className="text-gray-400 hover:text-gray-300"
+            >
               <MessageSquare className="h-5 w-5" />
             </Button>
           </div>

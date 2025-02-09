@@ -1,6 +1,6 @@
 import { gql } from "@apollo/client";
-import { client } from '@daylix/core';
 import { GetAboutQuery, GetAboutQueryVariables } from '@daylix/core/graphql/generated';
+import client from '@daylix/core/graphql';
 
 export const GET_ABOUT = gql`
   query GetAbout($locale: I18NLocaleCode!) {

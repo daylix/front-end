@@ -1,6 +1,6 @@
 import { gql } from "@apollo/client";
-import { client } from '@daylix/core';
 import { GetRulesQuery, GetRulesQueryVariables } from '@daylix/core/graphql/generated';
+import client from '@daylix/core/graphql';
 
 export const GET_RULES = gql`
   query GetRules($locale: I18NLocaleCode!) {

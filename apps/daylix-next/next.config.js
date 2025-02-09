@@ -17,6 +17,23 @@ const nextConfig = {
   experimental: {
     serverComponentsExternalPackages: ["graphql"],
   },
+  headers: async () => {
+    // Check if we're in development mode
+    if (process.env.NODE_ENV === 'development') {
+      return [
+        {
+          source: '/:path*',
+          headers: [
+            {
+              key: 'Cache-Control',
+              value: 'no-store, no-cache, must-revalidate',
+            },
+          ],
+        },
+      ];
+    }
+    return []; // Return empty array in production
+  },
   images: {
     remotePatterns: [
       {
@@ -24,6 +41,10 @@ const nextConfig = {
         hostname: '**.fra1.digitaloceanspaces.com',
       },
     ],
+    loader: 'custom',
+    loaderFile: './image-loader.js',
+    minimumCacheTTL: 3600,
+    deviceSizes: [640, 750, 828, 1080, 1200, 1920],
   },
   env: {
     NEXT_PUBLIC_API_URL: process.env.NODE_ENV === 'production' 

@@ -17,8 +17,9 @@
     "paths": {
       "@daylix/components": ["components/src/index.ts"],
       "@daylix/core": ["core/src/index.ts"],
+      "@daylix/core/graphql": ["core/src/lib/graphql/client"],
       "@daylix/core/graphql/generated": ["core/src/lib/graphql/generated"],
-      "@daylix/core/utils": ["core/src/lib/utils"],
+      "@daylix/core/utils": ["core/src/lib/utils/index.ts"],
       "@daylix/core/data-access": ["core/src/lib/data-access/index.ts"],
       "@daylix-ui/components": ["daylix-ui/src/lib/components/"],
       "@daylix-ui/hooks": ["daylix-ui/src/lib/hooks/index.ts"],

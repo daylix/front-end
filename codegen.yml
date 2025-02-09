@@ -5,6 +5,8 @@ documents:
   - "src/**/*.ts"
   - "apps/**/*.tsx"
   - "apps/**/*.ts"
+  - "core/src/**/*.tsx"
+  - "core/src/**/*.ts"
 generates:
   core/src/lib/graphql/generated/graphql.ts:
     plugins:
