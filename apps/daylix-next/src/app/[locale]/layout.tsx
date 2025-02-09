@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation';
 import { routing } from '../../i18n/routing';
 import '../global.css'
 import Header from '@daylix/header';
+import { TopBar } from '@daylix/components';
 
 export const metadata = {
   title: 'daylix.pro - платформа для захоплених іграми, кіно, інноваціями, залізом, та технологіями.',
@@ -33,6 +34,9 @@ export default async function LocaleLayout({
       <body className="bg-base-300" suppressHydrationWarning>
         <NextIntlClientProvider messages={messages}>
           <Header />
+          <div className="container mx-auto w-full">
+            <TopBar />
+          </div>
           <div className="max-w-7xl mx-auto">
             {children}
           </div>
