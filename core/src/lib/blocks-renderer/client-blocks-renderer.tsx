@@ -31,6 +31,7 @@ const BlockImage = ({ image }: BlockImageProps) => {
         loading="lazy"
         quality={85}
         sizes="(max-width: 600px) 100vw, 600px"
+        unoptimized={true}
         onLoad={() => setIsLoaded(true)}
         onError={() => setHasError(true)}
       />
