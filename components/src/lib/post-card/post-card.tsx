@@ -38,15 +38,15 @@ function getContentPreview(
   const previewBlocks = [];
 
   for (const block of content) {
-    if (textLength >= maxLength) break;
+    if (textLength >= maxLength && block.type !== 'image') break;
 
     if (block.type === 'paragraph') {
       const text = block.children
-        .filter((child) => typeof child === 'object' && 'text' in child)
-        .map((child) =>
-          typeof child === 'object' && 'text' in child ? child.text : ''
-        )
-        .join('');
+      .filter((child) => typeof child === 'object' && 'text' in child)
+      .map((child) =>
+        typeof child === 'object' && 'text' in child ? child.text : ''
+      )
+      .join('');
 
       if (textLength + text.length <= maxLength) {
         previewBlocks.push(block);
@@ -60,6 +60,17 @@ function getContentPreview(
         });
         break;
       }
+    } else if (block.type === 'image') {
+      previewBlocks.push({
+        type: 'image',
+        image: {
+          ...block.image,
+          url: block.image.url,
+          width: 600,
+          height: 400,
+          alt: block.image.alternativeText || '',
+        },
+      });
     }
   }
 
@@ -91,14 +102,14 @@ const PostCard: React.FC<PostProps> = ({
       <article className="flex flex-col gap-6">
         {/* Header with avatar and category */}
         <header className="flex items-center gap-3">
-          <Avatar 
-            src={avatar} 
+          <Avatar
+            src={avatar}
             letters={!avatar ? name.charAt(0).toUpperCase() : undefined}
             border={true}
             borderColor="primary"
             color="neutral"
-            shape="circle" 
-            size="sm" 
+            shape="circle"
+            size="sm"
           />
           <div className="flex flex-col">
             <div className="flex items-center gap-2">
@@ -139,7 +150,7 @@ const PostCard: React.FC<PostProps> = ({
           </div>
 
           {/* Content */}
-          <div className="text-gray-400 text-[15px] leading-relaxed">
+          <div className="text-gray-400 mt-4 text-[15px] leading-relaxed">
             <ClientBlocksRenderer content={preview} />
           </div>
 
