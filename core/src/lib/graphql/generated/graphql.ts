@@ -1467,7 +1467,9 @@ export type GetPostQuery = { readonly __typename?: 'Query', readonly posts: Read
 
 export type GetPostsQueryVariables = Exact<{
   locale: Scalars['I18NLocaleCode']['input'];
+  page: Scalars['Int']['input'];
+  pageSize: Scalars['Int']['input'];
 }>;
 
 
-export type GetPostsQuery = { readonly __typename?: 'Query', readonly posts: ReadonlyArray<{ readonly __typename?: 'Post', readonly documentId: string, readonly slug: string, readonly title: string, readonly content: any, readonly createdAt?: any | null, readonly cover: ReadonlyArray<{ readonly __typename?: 'UploadFile', readonly url: string } | null>, readonly users_permissions_user?: { readonly __typename?: 'UsersPermissionsUser', readonly username: string, readonly email: string, readonly avatar?: { readonly __typename?: 'UploadFile', readonly url: string } | null } | null, readonly categories: ReadonlyArray<{ readonly __typename?: 'Category', readonly name: string } | null> } | null> };
+export type GetPostsQuery = { readonly __typename?: 'Query', readonly posts_connection?: { readonly __typename?: 'PostEntityResponseCollection', readonly nodes: ReadonlyArray<{ readonly __typename?: 'Post', readonly documentId: string, readonly slug: string, readonly title: string, readonly content: any, readonly createdAt?: any | null, readonly cover: ReadonlyArray<{ readonly __typename?: 'UploadFile', readonly url: string } | null>, readonly users_permissions_user?: { readonly __typename?: 'UsersPermissionsUser', readonly username: string, readonly email: string, readonly avatar?: { readonly __typename?: 'UploadFile', readonly url: string } | null } | null, readonly categories: ReadonlyArray<{ readonly __typename?: 'Category', readonly name: string } | null> }>, readonly pageInfo: { readonly __typename?: 'Pagination', readonly page: number, readonly pageSize: number, readonly pageCount: number, readonly total: number } } | null };

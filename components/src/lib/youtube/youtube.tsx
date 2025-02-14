@@ -25,8 +25,8 @@ export default function YouTubeEmbed({ url, width, height }: YouTubeEmbedProps):
           position: 'absolute',
           top: 0,
           left: 0,
-          width: '100%',
-          height: '100%',
+          width,
+          height,
         }}
         allowFullScreen
         title="YouTube video player"

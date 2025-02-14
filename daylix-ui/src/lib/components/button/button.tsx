@@ -14,6 +14,7 @@ export interface ButtonProps extends ButtonBaseProps {
   wide?: boolean
   fullWidth?: boolean
   loading?: boolean
+  active?: boolean
   startIcon?: ReactNode
   endIcon?: ReactNode
 }
@@ -29,6 +30,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(({
   wide,
   fullWidth,
   loading,
+  active,
   startIcon,
   endIcon,
   disabled,
@@ -59,6 +61,7 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(({
       'btn-wide': wide,
       'btn-block': fullWidth,
       'btn-disabled': disabled,
+      'bg-btn-active-light': active,
     })
   )
 

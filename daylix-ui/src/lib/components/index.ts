@@ -7,3 +7,4 @@ export { default as Avatar } from './avatar/avatar';
 export { default as AvatarGroup } from './avatar/avatar-group';
 export { default as Alert } from './alert';
 export { default as UILink } from './link';
+export { default as Pagination } from './pagination';

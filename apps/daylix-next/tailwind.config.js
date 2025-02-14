@@ -72,6 +72,10 @@ module.exports = {
         }
       },
 
+      backgroundColor: {
+        'btn-active-light': '#2D2D2D',
+      },
+
       boxShadow: {
         'sm': '0 2px 4px rgba(0, 0, 0, 0.18)',
         DEFAULT: '0 2px 8px rgba(0, 0, 0, 0.24)',

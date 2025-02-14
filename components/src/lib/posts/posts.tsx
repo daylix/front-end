@@ -1,61 +1,72 @@
 'use client';
 
+import React, { useMemo, useState } from 'react';
 import { Post } from '@daylix/core/graphql/generated';
 import PostCard from '../post-card';
 import useSWR from 'swr';
 import { GetPostsDataAccess } from '@daylix/core/data-access';
+import { Button, Pagination } from '@daylix-ui/components';
 
 interface PostsProps {
   locale: string;
-  initialData?: Post[];
+  initialData?: {
+    posts: Post[];
+    pagination: {
+      page: number;
+      pageSize: number;
+      pageCount: number;
+      total: number;
+    };
+  };
 }
 
-export default function Posts({ locale, initialData = [] }: PostsProps) {
-  const { data: posts, error, isLoading } = useSWR(
-    ['posts', locale],
-    () => GetPostsDataAccess(locale).then(data => data as Post[]),
+export default function Posts({ locale, initialData }: PostsProps) {
+  const [page, setPage] = useState(initialData?.pagination.page || 1);
+  const pageSize = initialData?.pagination.pageSize || 10;
+
+  const { data, error, isLoading } = useSWR(
+    ['posts', locale, page, pageSize],
+    () => GetPostsDataAccess(locale, page, pageSize),
     {
       fallbackData: initialData,
       revalidateOnFocus: false
     }
   );
 
-  if (isLoading && (!posts || posts.length === 0)) {
-    return (
-      <div className="space-y-4">
-        {[1, 2, 3].map((i) => (
-          <div key={i} className="animate-pulse">
-            <div className="h-48 bg-gray-200 rounded-lg mb-4"></div>
-            <div className="space-y-3">
-              <div className="h-4 bg-gray-200 rounded w-3/4"></div>
-              <div className="h-4 bg-gray-200 rounded w-1/2"></div>
-            </div>
-          </div>
-        ))}
-      </div>
-    );
+  const posts = data?.posts || [];
+  const totalPages = data?.pagination.pageCount || 0;
+
+  if (isLoading && posts.length === 0) {
+    return <div>Loading...</div>;
   }
 
   if (error) {
-    return (
-      <div className="text-center py-4">
-        <div className="text-red-500 mb-2">Помилка завантаження постів</div>
-        <div className="text-gray-600">{error}</div>
-      </div>
-    );
+    return <div>Error: {error.message}</div>;
   }
 
-  if (!posts || posts.length === 0) {
-    return (
-      <div className="text-center py-4 text-gray-500">
-        Немає доступних постів
-      </div>
-    );
-  }
+  const handlePageChange = (newPage: number) => {
+    setPage(newPage);
+  };
+
+  const paginationButtons = useMemo(() => {
+    return Array.from({ length: totalPages }, (_, index) => {
+      const pageNumber = index + 1;
+      return (
+        <Button
+          key={pageNumber}
+          className="join-item"
+          active={pageNumber === page}
+          onClick={() => handlePageChange(pageNumber)}
+        >
+          {pageNumber}
+        </Button>
+      );
+    });
+  }, [totalPages, page, handlePageChange]);
 
   return (
     <div>
-      {posts.map((post) => (
+      {posts.map((post: Post) => (
         <PostCard
           key={post.documentId}
           id={post.documentId}
@@ -71,6 +82,11 @@ export default function Posts({ locale, initialData = [] }: PostsProps) {
           createdAt={post.createdAt ?? ''}
         />
       ))}
+      <div className="flex justify-center mt-4">
+        <Pagination>
+          {paginationButtons}
+        </Pagination>
+      </div>
     </div>
   );
 }
