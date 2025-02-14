@@ -82,11 +82,13 @@ export default function Posts({ locale, initialData }: PostsProps) {
           createdAt={post.createdAt ?? ''}
         />
       ))}
-      <div className="flex justify-center mt-4">
-        <Pagination>
-          {paginationButtons}
-        </Pagination>
-      </div>
+      {totalPages > 1 && (
+        <div className="flex justify-center mt-4">
+          <Pagination>
+            {paginationButtons}
+          </Pagination>
+        </div>
+      )}
     </div>
   );
 }
