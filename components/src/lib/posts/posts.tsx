@@ -14,7 +14,7 @@ export default function Posts({ locale, initialData = [] }: PostsProps) {
   const { data: posts, error, isLoading } = useSWR(
     ['posts', locale],
     () => GetPostsDataAccess(locale).then(data => data as Post[]),
-    { 
+    {
       fallbackData: initialData,
       revalidateOnFocus: false
     }
@@ -66,6 +66,7 @@ export default function Posts({ locale, initialData = [] }: PostsProps) {
           name={post.users_permissions_user?.username ?? ''}
           category={post.categories?.[0]?.name ?? ''}
           cover={post.cover?.[0]?.url}
+          youtube={post.youtube?.url}
           locale={locale}
           createdAt={post.createdAt ?? ''}
         />

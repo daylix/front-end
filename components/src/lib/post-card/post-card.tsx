@@ -26,6 +26,7 @@ interface PostProps {
   category: string;
   content: BlocksContent;
   cover?: string;
+  youtube?: string;
   locale: string;
   createdAt: any;
 }

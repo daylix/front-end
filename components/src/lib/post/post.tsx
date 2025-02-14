@@ -2,7 +2,7 @@
 
 import { ClientBlocksRenderer } from '@daylix/core';
 import { formatDistanceToNow, parseISO } from 'date-fns';
-import { Heart, MessageSquare, Eye, ThumbsDown, EyeIcon, MoreVertical } from 'lucide-react';
+import { Heart, MessageSquare, ThumbsDown, EyeIcon, MoreVertical } from 'lucide-react';
 import { Avatar, Button } from '@daylix-ui/components';
 import Link from 'next/link';
 import { ru, uk } from 'date-fns/locale';
@@ -11,6 +11,7 @@ import useSWR from 'swr';
 import { GetPostDataAccess } from '@daylix/core/data-access';
 import CardContainer from '../card-container';
 import { Post as PostType } from '@daylix/core/graphql/generated';
+import { YouTubeEmbed } from '@daylix/components';
 
 interface PostProps {
   locale: string;
@@ -92,14 +93,14 @@ export default function Post({ locale, slug, initialData }: PostProps) {
       <CardContainer className="bg-[#1a1a1a] text-gray-200 p-5 rounded-[24px]">
         <article className="flex flex-col gap-6">
           <header className="flex items-center gap-3">
-            <Avatar 
-                src={post.users_permissions_user?.avatar?.url} 
+            <Avatar
+                src={post.users_permissions_user?.avatar?.url}
                 letters={!post.users_permissions_user?.avatar?.url ? post.users_permissions_user?.username.charAt(0).toUpperCase() : undefined}
                 border={true}
                 borderColor="primary"
                 color="neutral"
-                shape="circle" 
-                size="sm" 
+                shape="circle"
+                size="sm"
               />
             <div className="flex flex-col">
               <div className="flex items-center gap-2">
@@ -147,6 +148,10 @@ export default function Post({ locale, slug, initialData }: PostProps) {
           <div className="text-gray-400 text-[15px] leading-relaxed">
             <ClientBlocksRenderer content={post.content} />
           </div>
+
+          {post.youtube && (
+            <YouTubeEmbed url={post.youtube?.url} width={600} height={330} />
+          )}
 
           <footer className="flex items-center justify-between pt-2">
             <div className="flex items-center gap-6">

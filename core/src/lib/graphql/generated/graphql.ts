@@ -589,6 +589,7 @@ export type Post = {
   readonly title: Scalars['String']['output'];
   readonly updatedAt?: Maybe<Scalars['DateTime']['output']>;
   readonly users_permissions_user?: Maybe<UsersPermissionsUser>;
+  readonly youtube?: Maybe<Scalars['JSON']['output']>;
 };
 
 
@@ -669,6 +670,7 @@ export type PostFiltersInput = {
   readonly title?: InputMaybe<StringFilterInput>;
   readonly updatedAt?: InputMaybe<DateTimeFilterInput>;
   readonly users_permissions_user?: InputMaybe<UsersPermissionsUserFiltersInput>;
+  readonly youtube?: InputMaybe<JsonFilterInput>;
 };
 
 export type PostInput = {
@@ -680,6 +682,7 @@ export type PostInput = {
   readonly slug?: InputMaybe<Scalars['String']['input']>;
   readonly title?: InputMaybe<Scalars['String']['input']>;
   readonly users_permissions_user?: InputMaybe<Scalars['ID']['input']>;
+  readonly youtube?: InputMaybe<Scalars['JSON']['input']>;
 };
 
 export type PostRelationResponseCollection = {
@@ -1460,7 +1463,7 @@ export type GetPostQueryVariables = Exact<{
 }>;
 
 
-export type GetPostQuery = { readonly __typename?: 'Query', readonly posts: ReadonlyArray<{ readonly __typename?: 'Post', readonly title: string, readonly slug: string, readonly content: any, readonly createdAt?: any | null, readonly cover: ReadonlyArray<{ readonly __typename?: 'UploadFile', readonly url: string } | null>, readonly users_permissions_user?: { readonly __typename?: 'UsersPermissionsUser', readonly username: string, readonly email: string, readonly avatar?: { readonly __typename?: 'UploadFile', readonly url: string } | null } | null, readonly categories: ReadonlyArray<{ readonly __typename?: 'Category', readonly name: string } | null> } | null> };
+export type GetPostQuery = { readonly __typename?: 'Query', readonly posts: ReadonlyArray<{ readonly __typename?: 'Post', readonly title: string, readonly slug: string, readonly content: any, readonly createdAt?: any | null, readonly youtube?: any | null, readonly cover: ReadonlyArray<{ readonly __typename?: 'UploadFile', readonly url: string } | null>, readonly users_permissions_user?: { readonly __typename?: 'UsersPermissionsUser', readonly username: string, readonly email: string, readonly avatar?: { readonly __typename?: 'UploadFile', readonly url: string } | null } | null, readonly categories: ReadonlyArray<{ readonly __typename?: 'Category', readonly name: string } | null> } | null> };
 
 export type GetPostsQueryVariables = Exact<{
   locale: Scalars['I18NLocaleCode']['input'];

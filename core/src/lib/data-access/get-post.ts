@@ -12,6 +12,7 @@ export const GET_POST = gql`
       cover {
         url
       }
+      youtube
       users_permissions_user {
         username
         email
@@ -26,7 +27,7 @@ export const GET_POST = gql`
   }
 `;
 
-export async function GetPostDataAccess(locale: string, slug: string) {  
+export async function GetPostDataAccess(locale: string, slug: string) {
   const { data } = await client.query<GetPostQuery, GetPostQueryVariables>({
     query: GET_POST,
     variables: {
@@ -40,6 +41,6 @@ export async function GetPostDataAccess(locale: string, slug: string) {
   }
 
   const post = data.posts[0];
-  
+
   return post as Post;
 }

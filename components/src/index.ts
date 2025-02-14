@@ -6,3 +6,4 @@ export { default as CardContainer } from './lib/card-container';
 export { default as Posts } from './lib/posts';
 export { default as Post } from './lib/post';
 export { default as TopBar } from './lib/top-bar';
+export { default as YouTubeEmbed } from './lib/youtube';
