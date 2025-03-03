@@ -9,7 +9,7 @@ export default function TopBar () {
   return (
     <div className="flex justify-center">
       <Alert
-        className="mt-4 md:mt-4 p-2 md:p-4 w-1/2"
+       className="mt-4 md:mt-4 p-2 md:p-4 max-w-[640px]"
         icon={<RocketIcon size={18} className="hidden md:block" />}>
         <div>
           <h2 className="text-sm md:text-lg font-bold">{t('title')}</h2>
