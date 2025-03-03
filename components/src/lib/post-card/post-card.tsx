@@ -2,11 +2,7 @@
 
 import React, { useState } from 'react';
 import {
-  Heart,
   MoreVertical,
-  Eye as EyeIcon,
-  MessageSquare,
-  ThumbsDown,
 } from 'lucide-react';
 import { Button, Avatar } from '@daylix-ui/components';
 import Link from 'next/link';
@@ -16,6 +12,7 @@ import Image from 'next/image';
 import { formatDistanceToNow, parseISO } from 'date-fns';
 import { ru, uk } from 'date-fns/locale';
 import { ClientBlocksRenderer } from '@daylix/core';
+import PostFooter from '@daylix/post-footer';
 
 interface PostProps {
   id: string;
@@ -99,7 +96,7 @@ const PostCard: React.FC<PostProps> = ({
   const [isImageLoaded, setIsImageLoaded] = useState(false);
 
   return (
-    <CardContainer className="bg-[#1a1a1a] text-gray-200 p-5 rounded-[24px]">
+    <CardContainer className="text-gray-200 p-5 rounded-[24px]">
       <article className="flex flex-col gap-6">
         {/* Header with avatar and category */}
         <header className="flex items-center gap-3">
@@ -145,13 +142,13 @@ const PostCard: React.FC<PostProps> = ({
         >
           {/* Title */}
           <div className="space-y-3">
-            <h2 className="text-[28px] font-semibold leading-tight text-gray-100">
+            <h2 className="text-[22px] leading-[30px] font-medium text-gray-100">
               {title}
             </h2>
           </div>
 
           {/* Content */}
-          <div className="text-gray-400 mt-4 text-[15px] leading-relaxed">
+          <div className="text-gray-300 mt-4 text-[17px] leading-[26px] font-light">
             <ClientBlocksRenderer content={preview} />
           </div>
 
@@ -179,35 +176,7 @@ const PostCard: React.FC<PostProps> = ({
         </Link>
 
         {/* Footer with interaction buttons */}
-        <footer className="flex items-center justify-between pt-2">
-          <div className="flex items-center gap-6">
-            <Button
-              color="ghost"
-              size="sm"
-              className="text-gray-400 hover:text-gray-300"
-            >
-              <Heart className="h-5 w-5" />
-            </Button>
-            <Button
-              color="ghost"
-              size="sm"
-              className="text-gray-400 hover:text-gray-300"
-            >
-              <ThumbsDown className="h-5 w-5" />
-            </Button>
-            <Button
-              color="ghost"
-              size="sm"
-              className="text-gray-400 hover:text-gray-300"
-            >
-              <MessageSquare className="h-5 w-5" />
-            </Button>
-          </div>
-          <div className="flex items-center gap-2">
-            <EyeIcon className="h-5 w-5 text-gray-400" />
-            <span className="text-gray-400">255</span>
-          </div>
-        </footer>
+        <PostFooter />
       </article>
     </CardContainer>
   );

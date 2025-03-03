@@ -1,6 +1,5 @@
 import { Posts } from "@daylix/components";
 import { GetPostsDataAccess } from "@daylix/core/data-access";
-import { Post } from '@daylix/core/graphql/generated';
 
 interface PageProps {
   params: {

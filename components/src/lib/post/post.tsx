@@ -2,7 +2,7 @@
 
 import { ClientBlocksRenderer } from '@daylix/core';
 import { formatDistanceToNow, parseISO } from 'date-fns';
-import { Heart, MessageSquare, ThumbsDown, EyeIcon, MoreVertical } from 'lucide-react';
+import { MoreVertical } from 'lucide-react';
 import { Avatar, Button } from '@daylix-ui/components';
 import Link from 'next/link';
 import { ru, uk } from 'date-fns/locale';
@@ -12,6 +12,7 @@ import { GetPostDataAccess } from '@daylix/core/data-access';
 import CardContainer from '../card-container';
 import { Post as PostType } from '@daylix/core/graphql/generated';
 import { YouTubeEmbed } from '@daylix/components';
+import PostFooter from '@daylix/post-footer';
 
 interface PostProps {
   locale: string;
@@ -39,7 +40,7 @@ export default function Post({ locale, slug, initialData }: PostProps) {
   if (isLoading && !initialData) {
     return (
       <div className="container mx-auto max-w-4xl">
-        <CardContainer className="bg-[#1a1a1a] text-gray-200 p-5 rounded-[24px]">
+        <CardContainer className="text-gray-200 p-5 rounded-[24px]">
           <div className="animate-pulse">
             <div className="flex items-center gap-3">
               <div className="h-12 w-12 rounded-full bg-gray-700"></div>
@@ -66,7 +67,7 @@ export default function Post({ locale, slug, initialData }: PostProps) {
   if (error) {
     return (
       <div className="container mx-auto">
-        <CardContainer className="bg-[#1a1a1a] text-gray-200 p-5 rounded-[24px]">
+        <CardContainer className="text-gray-200 p-5 rounded-[24px]">
           <div className="text-center">
             <div className="text-red-500 mb-2">Помилка завантаження поста</div>
             <div className="text-gray-400">{error instanceof Error ? error.message : 'Failed to fetch post'}</div>
@@ -79,7 +80,7 @@ export default function Post({ locale, slug, initialData }: PostProps) {
   if (!post) {
     return (
       <div className="container mx-auto">
-        <CardContainer className="bg-[#1a1a1a] text-gray-200 p-5 rounded-[24px]">
+        <CardContainer className="text-gray-200 p-5 rounded-[24px]">
           <div className="text-center">
             <h1 className="text-2xl font-bold text-gray-200">Пост не знайдено</h1>
           </div>
@@ -90,7 +91,7 @@ export default function Post({ locale, slug, initialData }: PostProps) {
 
   return (
     <div className="container mx-auto max-w-4xl">
-      <CardContainer className="bg-[#1a1a1a] text-gray-200 p-5 rounded-[24px]">
+      <CardContainer className="text-gray-200 p-5 rounded-[24px]">
         <article className="flex flex-col gap-6">
           <header className="flex items-center gap-3">
             <Avatar
@@ -106,11 +107,11 @@ export default function Post({ locale, slug, initialData }: PostProps) {
               <div className="flex items-center gap-2">
                 <span className="font-medium text-gray-100">{post.users_permissions_user?.username}</span>
               </div>
-              <span className="text-sm text-gray-500">
+              <span className="text-sm text-gray-400">
                 {post.categories?.[0] && (
                   <Link
                     href={`/category/${post.categories[0].name}`}
-                    className="text-gray-400 hover:underline"
+                    className="text-gray-300 hover:underline"
                   >
                     {post.categories[0].name}
                   </Link>
@@ -129,7 +130,7 @@ export default function Post({ locale, slug, initialData }: PostProps) {
           </header>
 
           <div className="space-y-3">
-            <h1 className="text-[28px] font-semibold leading-tight text-gray-100">
+            <h1 className="text-[22px] leading-[30px] font-medium text-gray-100">
               {post.title}
             </h1>
           </div>
@@ -145,7 +146,7 @@ export default function Post({ locale, slug, initialData }: PostProps) {
             </div>
           )}
 
-          <div className="text-gray-400 text-[15px] leading-relaxed">
+          <div className="text-gray-300 mt-4 text-[17px] leading-[26px] font-light">
             <ClientBlocksRenderer content={post.content} />
           </div>
 
@@ -153,23 +154,7 @@ export default function Post({ locale, slug, initialData }: PostProps) {
             <YouTubeEmbed url={post.youtube?.url} width={600} height={330} />
           )}
 
-          <footer className="flex items-center justify-between pt-2">
-            <div className="flex items-center gap-6">
-              <Button color="ghost" size="sm" className="text-gray-400 hover:text-gray-300">
-                <Heart className="h-5 w-5" />
-              </Button>
-              <Button color="ghost" size="sm" className="text-gray-400 hover:text-gray-300">
-                <ThumbsDown className="h-5 w-5" />
-              </Button>
-              <Button color="ghost" size="sm" className="text-gray-400 hover:text-gray-300">
-                <MessageSquare className="h-5 w-5" />
-              </Button>
-            </div>
-            <div className="flex items-center gap-2">
-              <EyeIcon className="h-5 w-5 text-gray-400" />
-              <span className="text-gray-400">255</span>
-            </div>
-          </footer>
+          <PostFooter />
         </article>
       </CardContainer>
     </div>

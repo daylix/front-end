@@ -7,18 +7,20 @@ export default function TopBar () {
   const t = useTranslations('topBar');
 
   return (
-    <Alert
-      className="mt-4 md:mt-4 p-2 md:p-4"
-      icon={<RocketIcon size={18} className="hidden md:block" />}>
-      <div>
-        <h2 className="text-sm md:text-lg font-bold">{t('title')}</h2>
-        <span className="text-xs md:text-sm">
-      {t('description')}{' '}
-          <Link href="https://github.com/daylix" legacyBehavior>
-        <UILink hover={false} className="text-xs md:text-sm">{t('linkText')}</UILink>
-      </Link>
-    </span>
-      </div>
-    </Alert>
+    <div className="flex justify-center">
+      <Alert
+        className="mt-4 md:mt-4 p-2 md:p-4 w-1/2"
+        icon={<RocketIcon size={18} className="hidden md:block" />}>
+        <div>
+          <h2 className="text-sm md:text-lg font-bold">{t('title')}</h2>
+          <span className="text-xs md:text-sm">
+            {t('description')}{' '}
+            <Link href="https://github.com/daylix" legacyBehavior>
+              <UILink hover={false} className="text-xs md:text-sm">{t('linkText')}</UILink>
+            </Link>
+          </span>
+        </div>
+      </Alert>
+    </div>
   );
 }

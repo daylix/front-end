@@ -3,6 +3,9 @@
     "navBar": {
       "createPost": {
         "title": "Запостить"
+      },
+      "login": {
+        "title": "Войти"
       }
     }
   },

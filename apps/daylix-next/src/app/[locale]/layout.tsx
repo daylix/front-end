@@ -5,6 +5,14 @@ import { routing } from '../../i18n/routing';
 import '../global.css'
 import Header from '@daylix/header';
 import { TopBar } from '@daylix/components';
+import { Roboto } from 'next/font/google';
+
+const roboto = Roboto({
+  weight: ['300', '400', '500', '700'],
+  subsets: ['latin', 'cyrillic'],
+  display: 'swap',
+  variable: '--font-roboto',
+});
 
 export const metadata = {
   title: 'daylix.pro - платформа для захоплених іграми, кіно, інноваціями, залізом, та технологіями.',
@@ -20,28 +28,39 @@ export default async function LocaleLayout({
   children: React.ReactNode;
   params: { locale: string };
 }) {
-  <body className="bg-base-300" suppressHydrationWarning></body>
   if (!routing.locales.includes(locale as any)) {
     notFound();
   }
 
-  // Providing all messages to the client
-  // side is the easiest way to get started
   const messages = await getMessages();
 
   return (
-    <html lang={locale} suppressHydrationWarning>
-      <body className="bg-base-300" suppressHydrationWarning>
-        <NextIntlClientProvider messages={messages}>
-          <Header />
-          <div className="container mx-auto w-full">
-            <TopBar />
-          </div>
-          <div className="max-w-7xl mx-auto">
-            {children}
-          </div>
-        </NextIntlClientProvider>
-      </body>
+    <html lang={locale} suppressHydrationWarning className={`${roboto.variable}`}>
+    <body
+      className="bg-base-100"
+      suppressHydrationWarning
+      style={{
+        backgroundImage: `
+          linear-gradient(
+            to bottom,
+            #020202,
+            rgba(2, 2, 2, 0.7) 25%,
+            rgba(2, 2, 2, 0.3) 40%,
+            transparent 80%
+          ),
+          radial-gradient(circle at center, #ffffff50 1px, transparent 1px)
+        `,
+        backgroundSize: '100% 100%, 50px 50px',
+        backgroundAttachment: 'fixed',
+        backgroundColor: '#020202',
+      }}
+    >
+    <NextIntlClientProvider locale={locale} messages={messages}>
+      <Header />
+      <TopBar />
+      {children}
+    </NextIntlClientProvider>
+    </body>
     </html>
   );
 }
