@@ -1,18 +1,13 @@
 'use client';
 
 import React, { useState } from 'react';
-import {
-  MoreVertical,
-} from 'lucide-react';
-import { Button, Avatar } from '@daylix-ui/components';
 import Link from 'next/link';
-import CardContainer from '../card-container';
 import { BlocksContent } from '@strapi/blocks-react-renderer';
 import Image from 'next/image';
 import { formatDistanceToNow, parseISO } from 'date-fns';
 import { ru, uk } from 'date-fns/locale';
 import { ClientBlocksRenderer } from '@daylix/core';
-import PostFooter from '@daylix/post-footer';
+import { PostHeader, PostFooter, CardContainer } from '@daylix/components'
 
 interface PostProps {
   id: string;
@@ -21,6 +16,7 @@ interface PostProps {
   name: string;
   title: string;
   category: string;
+  categorySlug: string;
   content: BlocksContent;
   cover?: string;
   youtube?: string;
@@ -81,6 +77,7 @@ const PostCard: React.FC<PostProps> = ({
   name,
   title,
   category,
+  categorySlug,
   content,
   cover,
   locale,
@@ -99,41 +96,13 @@ const PostCard: React.FC<PostProps> = ({
     <CardContainer className="text-gray-200 p-5 rounded-[24px]">
       <article className="flex flex-col gap-6">
         {/* Header with avatar and category */}
-        <header className="flex items-center gap-3">
-          <Avatar
-            src={avatar}
-            letters={!avatar ? name.charAt(0).toUpperCase() : undefined}
-            border={true}
-            borderColor="primary"
-            color="neutral"
-            shape="circle"
-            size="sm"
-          />
-          <div className="flex flex-col">
-            <div className="flex items-center gap-2">
-              <span className="font-medium text-gray-100">{name}</span>
-            </div>
-            <span className="text-sm text-gray-500">
-              {category && (
-                <Link
-                  href={`/category/${category}`}
-                  className="text-gray-400 hover:underline"
-                >
-                  {category}
-                </Link>
-              )}
-              {category && ' '}
-              {formattedDate}
-            </span>
-          </div>
-          <Button
-            color="ghost"
-            size="sm"
-            className="ml-auto text-gray-400 hover:text-gray-300"
-          >
-            <MoreVertical className="h-5 w-5" />
-          </Button>
-        </header>
+        <PostHeader 
+          avatar={avatar}
+          name={name}
+          category={category}
+          categorySlug={categorySlug}
+          formattedDate={formattedDate}
+        />
 
         <Link
           href={`/${locale}/post/${encodeURIComponent(slug)}`}

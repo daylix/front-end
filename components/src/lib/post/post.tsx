@@ -2,17 +2,12 @@
 
 import { ClientBlocksRenderer } from '@daylix/core';
 import { formatDistanceToNow, parseISO } from 'date-fns';
-import { MoreVertical } from 'lucide-react';
-import { Avatar, Button } from '@daylix-ui/components';
-import Link from 'next/link';
 import { ru, uk } from 'date-fns/locale';
 import Image from 'next/image';
 import useSWR from 'swr';
 import { GetPostDataAccess } from '@daylix/core/data-access';
-import CardContainer from '../card-container';
 import { Post as PostType } from '@daylix/core/graphql/generated';
-import { YouTubeEmbed } from '@daylix/components';
-import PostFooter from '@daylix/post-footer';
+import { PostHeader, YouTubeEmbed, PostFooter, CardContainer } from '@daylix/components';
 
 interface PostProps {
   locale: string;
@@ -93,41 +88,13 @@ export default function Post({ locale, slug, initialData }: PostProps) {
     <div className="container mx-auto max-w-4xl">
       <CardContainer className="text-gray-200 p-5 rounded-[24px]">
         <article className="flex flex-col gap-6">
-          <header className="flex items-center gap-3">
-            <Avatar
-                src={post.users_permissions_user?.avatar?.url}
-                letters={!post.users_permissions_user?.avatar?.url ? post.users_permissions_user?.username.charAt(0).toUpperCase() : undefined}
-                border={true}
-                borderColor="primary"
-                color="neutral"
-                shape="circle"
-                size="sm"
-              />
-            <div className="flex flex-col">
-              <div className="flex items-center gap-2">
-                <span className="font-medium text-gray-100">{post.users_permissions_user?.username}</span>
-              </div>
-              <span className="text-sm text-gray-400">
-                {post.categories?.[0] && (
-                  <Link
-                    href={`/category/${post.categories[0].name}`}
-                    className="text-gray-300 hover:underline"
-                  >
-                    {post.categories[0].name}
-                  </Link>
-                )}
-                {post.categories?.[0] && " "}
-                {formattedDate}
-              </span>
-            </div>
-            <Button
-              color="ghost"
-              size="sm"
-              className="ml-auto text-gray-400 hover:text-gray-300"
-            >
-              <MoreVertical className="h-5 w-5" />
-            </Button>
-          </header>
+          <PostHeader 
+            avatar={post.users_permissions_user?.avatar?.url}
+            name={post.users_permissions_user?.username ?? ''}
+            category={post.categories?.[0]?.name}
+            categorySlug={post.categories?.[0]?.slug ?? ''}
+            formattedDate={formattedDate}
+          /> 
 
           <div className="space-y-3">
             <h1 className="text-[22px] leading-[30px] font-medium text-gray-100">

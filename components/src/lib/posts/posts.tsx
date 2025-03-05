@@ -2,7 +2,7 @@
 
 import React, { useMemo, useState } from 'react';
 import { Post } from '@daylix/core/graphql/generated';
-import PostCard from '../post-card';
+import { PostCard } from '@daylix/components';
 import useSWR from 'swr';
 import { GetPostsDataAccess } from '@daylix/core/data-access';
 import { Button, Pagination } from '@daylix-ui/components';
@@ -76,6 +76,7 @@ export default function Posts({ locale, initialData }: PostsProps) {
           avatar={post.users_permissions_user?.avatar?.url ?? ''}
           name={post.users_permissions_user?.username ?? ''}
           category={post.categories?.[0]?.name ?? ''}
+          categorySlug={post.categories?.[0]?.slug ?? ''}
           cover={post.cover?.[0]?.url}
           youtube={post.youtube?.url}
           locale={locale}

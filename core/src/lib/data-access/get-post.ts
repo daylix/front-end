@@ -22,6 +22,7 @@ export const GET_POST = gql`
       }
       categories {
         name
+        slug
       }
     }
   }

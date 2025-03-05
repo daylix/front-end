@@ -77,6 +77,7 @@ export type Category = {
   readonly posts: ReadonlyArray<Maybe<Post>>;
   readonly posts_connection?: Maybe<PostRelationResponseCollection>;
   readonly publishedAt?: Maybe<Scalars['DateTime']['output']>;
+  readonly slug?: Maybe<Scalars['String']['output']>;
   readonly updatedAt?: Maybe<Scalars['DateTime']['output']>;
 };
 
@@ -125,6 +126,7 @@ export type CategoryFiltersInput = {
   readonly or?: InputMaybe<ReadonlyArray<InputMaybe<CategoryFiltersInput>>>;
   readonly posts?: InputMaybe<PostFiltersInput>;
   readonly publishedAt?: InputMaybe<DateTimeFilterInput>;
+  readonly slug?: InputMaybe<StringFilterInput>;
   readonly updatedAt?: InputMaybe<DateTimeFilterInput>;
 };
 
@@ -132,6 +134,7 @@ export type CategoryInput = {
   readonly name?: InputMaybe<Scalars['String']['input']>;
   readonly posts?: InputMaybe<ReadonlyArray<InputMaybe<Scalars['ID']['input']>>>;
   readonly publishedAt?: InputMaybe<Scalars['DateTime']['input']>;
+  readonly slug?: InputMaybe<Scalars['String']['input']>;
 };
 
 export type CategoryRelationResponseCollection = {
@@ -1463,7 +1466,7 @@ export type GetPostQueryVariables = Exact<{
 }>;
 
 
-export type GetPostQuery = { readonly __typename?: 'Query', readonly posts: ReadonlyArray<{ readonly __typename?: 'Post', readonly title: string, readonly slug: string, readonly content: any, readonly createdAt?: any | null, readonly youtube?: any | null, readonly cover: ReadonlyArray<{ readonly __typename?: 'UploadFile', readonly url: string } | null>, readonly users_permissions_user?: { readonly __typename?: 'UsersPermissionsUser', readonly username: string, readonly email: string, readonly avatar?: { readonly __typename?: 'UploadFile', readonly url: string } | null } | null, readonly categories: ReadonlyArray<{ readonly __typename?: 'Category', readonly name: string } | null> } | null> };
+export type GetPostQuery = { readonly __typename?: 'Query', readonly posts: ReadonlyArray<{ readonly __typename?: 'Post', readonly title: string, readonly slug: string, readonly content: any, readonly createdAt?: any | null, readonly youtube?: any | null, readonly cover: ReadonlyArray<{ readonly __typename?: 'UploadFile', readonly url: string } | null>, readonly users_permissions_user?: { readonly __typename?: 'UsersPermissionsUser', readonly username: string, readonly email: string, readonly avatar?: { readonly __typename?: 'UploadFile', readonly url: string } | null } | null, readonly categories: ReadonlyArray<{ readonly __typename?: 'Category', readonly name: string, readonly slug?: string | null } | null> } | null> };
 
 export type GetPostsQueryVariables = Exact<{
   locale: Scalars['I18NLocaleCode']['input'];
@@ -1472,4 +1475,4 @@ export type GetPostsQueryVariables = Exact<{
 }>;
 
 
-export type GetPostsQuery = { readonly __typename?: 'Query', readonly posts_connection?: { readonly __typename?: 'PostEntityResponseCollection', readonly nodes: ReadonlyArray<{ readonly __typename?: 'Post', readonly documentId: string, readonly slug: string, readonly title: string, readonly content: any, readonly createdAt?: any | null, readonly cover: ReadonlyArray<{ readonly __typename?: 'UploadFile', readonly url: string } | null>, readonly users_permissions_user?: { readonly __typename?: 'UsersPermissionsUser', readonly username: string, readonly email: string, readonly avatar?: { readonly __typename?: 'UploadFile', readonly url: string } | null } | null, readonly categories: ReadonlyArray<{ readonly __typename?: 'Category', readonly name: string } | null> }>, readonly pageInfo: { readonly __typename?: 'Pagination', readonly page: number, readonly pageSize: number, readonly pageCount: number, readonly total: number } } | null };
+export type GetPostsQuery = { readonly __typename?: 'Query', readonly posts_connection?: { readonly __typename?: 'PostEntityResponseCollection', readonly nodes: ReadonlyArray<{ readonly __typename?: 'Post', readonly documentId: string, readonly slug: string, readonly title: string, readonly content: any, readonly createdAt?: any | null, readonly cover: ReadonlyArray<{ readonly __typename?: 'UploadFile', readonly url: string } | null>, readonly users_permissions_user?: { readonly __typename?: 'UsersPermissionsUser', readonly username: string, readonly email: string, readonly avatar?: { readonly __typename?: 'UploadFile', readonly url: string } | null } | null, readonly categories: ReadonlyArray<{ readonly __typename?: 'Category', readonly name: string, readonly slug?: string | null } | null> }>, readonly pageInfo: { readonly __typename?: 'Pagination', readonly page: number, readonly pageSize: number, readonly pageCount: number, readonly total: number } } | null };

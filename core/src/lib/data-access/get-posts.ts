@@ -27,6 +27,7 @@ export const GET_POSTS = gql`
         }
         categories {
           name
+          slug
         }
       }
       pageInfo {
