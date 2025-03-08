@@ -88,13 +88,13 @@ export default function Post({ locale, slug, initialData }: PostProps) {
     <div className="container mx-auto max-w-4xl">
       <CardContainer className="text-gray-200 p-5 rounded-[24px]">
         <article className="flex flex-col gap-6">
-          <PostHeader 
+          <PostHeader
             avatar={post.users_permissions_user?.avatar?.url}
             name={post.users_permissions_user?.username ?? ''}
             category={post.categories?.[0]?.name}
             categorySlug={post.categories?.[0]?.slug ?? ''}
             formattedDate={formattedDate}
-          /> 
+          />
 
           <div className="space-y-3">
             <h1 className="text-[22px] leading-[30px] font-medium text-gray-100">
@@ -113,7 +113,7 @@ export default function Post({ locale, slug, initialData }: PostProps) {
             </div>
           )}
 
-          <div className="text-gray-300 mt-4 text-[17px] leading-[26px] font-light">
+          <div className="text-gray-300 mt-4">
             <RichContent content={post.content} />
           </div>
 

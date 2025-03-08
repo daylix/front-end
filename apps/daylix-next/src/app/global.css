@@ -16,8 +16,32 @@
 
   /*   all body text Source Sans Pro */
   body {
-    font-weight: 400;
-    font-size: 1rem;
-    font-family: var(--font-roboto);
+    font-size: 17px;
+    line-height: 26px;
+    font-family: system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
+
+  body[data-font-family=Roboto] {
+    font-family: Roboto,system-ui,-apple-system,Segoe UI,Roboto,Ubuntu,Cantarell,Noto Sans,sans-serif;
+  }
+
+  body[data-font-smoothing=Default] {
+    -webkit-font-smoothing: auto;
+    -moz-osx-font-smoothing: auto;
+  }
+}
+
+br {
+  content: "A" !important;
+  display: block !important;
+  margin-bottom: 1.5em !important;
+}
+
+blockquote {
+  font-style: normal;
+  border-left: 4px solid #ccc;
+  padding: 0.5em 1em;
+  margin: 1.5em 0;
 }

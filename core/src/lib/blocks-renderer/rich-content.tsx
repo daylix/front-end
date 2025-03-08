@@ -12,7 +12,8 @@ export default function RichContent({ content }: BlocksRendererProps) {
     <BlocksRenderer
       content={content}
       blocks={{
-        paragraph: ({ children }) => <p className="my-4">{children}</p>,
+        paragraph: ({ children }) => <p className="my-3">{children}</p>,
+        quote: (props) => <blockquote>{props.children}</blockquote>,
         link: ({ children, url }) => <a href={url} className="text-blue-500 hover:underline">{children}</a>,
         heading: ({ children, level }) => {
           switch (level) {

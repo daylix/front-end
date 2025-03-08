@@ -98,7 +98,7 @@ const PostCard: React.FC<PostProps> = ({
     <CardContainer className="text-gray-200 p-5 rounded-[24px]">
       <article className="flex flex-col gap-6">
         {/* Header with avatar and category */}
-        <PostHeader 
+        <PostHeader
           avatar={avatar}
           name={name}
           category={category}
@@ -119,7 +119,7 @@ const PostCard: React.FC<PostProps> = ({
           </div>
 
           {/* Content */}
-          <div className="text-gray-300 mt-4 text-[17px] leading-[26px] font-light">
+          <div className="text-gray-300 mt-4">
             <RichContent content={preview} />
           </div>
 
