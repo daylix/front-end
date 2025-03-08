@@ -10,7 +10,7 @@ const CardContainer: React.FC<CardContainerProps> = ({
   className = ''
 }) => {
   return (
-    <div className="card bg-base-100 shadow-xl max-w-[640px] mx-auto mb-4 mt-4">
+    <div className="card bg-base-200 shadow-xl max-w-[640px] mx-auto mb-4 mt-4">
       <div className={`card-body p-4 sm:p-6 ${className}`}>
         {children}
       </div>

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useMemo, useState } from 'react';
+import { useMemo, useState } from 'react';
 import { Post } from '@daylix/core/graphql/generated';
 import { PostCard } from '@daylix/components';
 import useSWR from 'swr';

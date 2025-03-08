@@ -1,6 +1,6 @@
 'use client';
 
-import { ClientBlocksRenderer } from '@daylix/core';
+import { RichContent } from '@daylix/core';
 import { formatDistanceToNow, parseISO } from 'date-fns';
 import { ru, uk } from 'date-fns/locale';
 import Image from 'next/image';
@@ -114,7 +114,7 @@ export default function Post({ locale, slug, initialData }: PostProps) {
           )}
 
           <div className="text-gray-300 mt-4 text-[17px] leading-[26px] font-light">
-            <ClientBlocksRenderer content={post.content} />
+            <RichContent content={post.content} />
           </div>
 
           {post.youtube && (

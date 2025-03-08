@@ -1,12 +1,12 @@
 'use client';
 
-import { useLocale } from 'next-intl';
 import { useRouter, usePathname } from 'next/navigation';
-import { useTransition } from 'react';
 import { Dropdown } from '@daylix-ui/components';
 import { Globe } from 'lucide-react';
+import { useTransition } from 'react';
+import { useLocale } from 'next-intl';
 
-export default function LocalSwitcher() {
+const LocalSwitcher = () => {
   const [isPending, startTransition] = useTransition();
   const router = useRouter();
   const pathname = usePathname();
@@ -37,3 +37,5 @@ export default function LocalSwitcher() {
     </Dropdown>
   );
 }
+
+export default LocalSwitcher;

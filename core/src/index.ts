@@ -1,1 +1,1 @@
-export { default as ClientBlocksRenderer } from './lib/blocks-renderer'
+export { default as RichContent } from './lib/blocks-renderer'

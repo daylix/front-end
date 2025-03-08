@@ -3,9 +3,10 @@ import { getMessages } from 'next-intl/server';
 import { notFound } from 'next/navigation';
 import { routing } from '../../i18n/routing';
 import '../global.css'
-import Header from '@daylix/header';
-import { TopBar } from '@daylix/components';
 import { Roboto } from 'next/font/google';
+import React from 'react';
+import { Header } from '@daylix/shell';
+import { TopBar } from '@daylix/components';
 
 const roboto = Roboto({
   weight: ['300', '400', '500', '700'],
@@ -37,7 +38,7 @@ export default async function LocaleLayout({
   return (
     <html lang={locale} suppressHydrationWarning className={`${roboto.variable}`}>
     <body
-      className="bg-base-100"
+      className="bg-base-200"
       suppressHydrationWarning
       style={{
         backgroundImage: `

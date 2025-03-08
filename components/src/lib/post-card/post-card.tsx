@@ -6,8 +6,10 @@ import { BlocksContent } from '@strapi/blocks-react-renderer';
 import Image from 'next/image';
 import { formatDistanceToNow, parseISO } from 'date-fns';
 import { ru, uk } from 'date-fns/locale';
-import { ClientBlocksRenderer } from '@daylix/core';
-import { PostHeader, PostFooter, CardContainer } from '@daylix/components'
+import { RichContent } from '@daylix/core';
+import PostHeader from '../post-header';
+import PostFooter from '../post-footer';
+import CardContainer from '../card-container';
 
 interface PostProps {
   id: string;
@@ -118,7 +120,7 @@ const PostCard: React.FC<PostProps> = ({
 
           {/* Content */}
           <div className="text-gray-300 mt-4 text-[17px] leading-[26px] font-light">
-            <ClientBlocksRenderer content={preview} />
+            <RichContent content={preview} />
           </div>
 
           {/* Cover image */}

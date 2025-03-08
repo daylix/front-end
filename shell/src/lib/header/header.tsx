@@ -7,7 +7,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { useParams } from 'next/navigation';
 
-export function Header() {
+export const Header = () => {
   const t = useTranslations('homePage.navBar');
   const params = useParams();
   const locale = params?.locale as string || 'uk';
