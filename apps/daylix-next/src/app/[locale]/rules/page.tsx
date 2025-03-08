@@ -1,6 +1,6 @@
 import { getRulesData } from './rules-api';
-import { ClientBlocksRenderer } from '@daylix/core';
-import CardContainer from '@daylix/card-container';
+import { RichContent } from '@daylix/core';
+import { CardContainer } from '@daylix/components';
 
 export async function generateStaticParams() {
   return [
@@ -21,7 +21,7 @@ export default async function RulesPage({ params }: { params: { locale: string }
           <CardContainer>
             <h3 className="text-base-content font-semibold text-xl md:text-2xl lg:text-4xl leading-5 md:leading-10 ">{rules.title}</h3>
             <div className="mt-4">
-              <ClientBlocksRenderer content={rules.content} />
+              <RichContent content={rules.content} />
             </div>
           </CardContainer>
         </div>

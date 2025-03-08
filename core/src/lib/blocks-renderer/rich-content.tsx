@@ -2,11 +2,12 @@
 
 import { BlocksRenderer, BlocksContent } from '@strapi/blocks-react-renderer';
 import BlockImage from './block-image';
-type ClientBlocksRendererProps = {
+
+type BlocksRendererProps = {
   content: BlocksContent;
 };
 
-export default function RichContent({ content }: ClientBlocksRendererProps) {
+export default function RichContent({ content }: BlocksRendererProps) {
   return (
     <BlocksRenderer
       content={content}
@@ -35,7 +36,7 @@ export default function RichContent({ content }: ClientBlocksRendererProps) {
           if (props.format === 'ordered') {
             return <ol className="list-decimal list-inside">{props.children}</ol>;
           }
-    
+
           return <ul className="list-disc list-inside">{props.children}</ul>;
         },
         'list-item': (props) => <li className="my-1">{props.children}</li>,
