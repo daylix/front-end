@@ -31,9 +31,11 @@ export const Header = () => {
         </Navbar.Start>
         <Navbar.End>
           <div className="flex gap-4">
-            <Button color="primary">
-              <span>{t('login.title')}</span>
-            </Button>
+            <Link href={`/${locale}/login`}>
+              <Button color="primary">
+                <span>{t('login.title')}</span>
+              </Button>
+            </Link>
             <LocalSwitcher />
           </div>
         </Navbar.End>
