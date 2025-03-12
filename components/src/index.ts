@@ -8,3 +8,5 @@ export { default as TopBar } from './lib/top-bar';
 export { default as YouTubeEmbed } from './lib/youtube';
 export { default as PostHeader } from './lib/post-header';
 export { default as CardContainer } from './lib/card-container';
+export { default as FormContainer } from './lib/form-container';
+export { default as AuthButton } from './lib/auth-button/auth-button';

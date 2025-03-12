@@ -1476,3 +1476,11 @@ export type GetPostsQueryVariables = Exact<{
 
 
 export type GetPostsQuery = { readonly __typename?: 'Query', readonly posts_connection?: { readonly __typename?: 'PostEntityResponseCollection', readonly nodes: ReadonlyArray<{ readonly __typename?: 'Post', readonly documentId: string, readonly slug: string, readonly title: string, readonly content: any, readonly createdAt?: any | null, readonly cover: ReadonlyArray<{ readonly __typename?: 'UploadFile', readonly url: string } | null>, readonly users_permissions_user?: { readonly __typename?: 'UsersPermissionsUser', readonly username: string, readonly email: string, readonly avatar?: { readonly __typename?: 'UploadFile', readonly url: string } | null } | null, readonly categories: ReadonlyArray<{ readonly __typename?: 'Category', readonly name: string, readonly slug?: string | null } | null> }>, readonly pageInfo: { readonly __typename?: 'Pagination', readonly page: number, readonly pageSize: number, readonly pageCount: number, readonly total: number } } | null };
+
+export type LoginMutationVariables = Exact<{
+  identifier: Scalars['String']['input'];
+  password: Scalars['String']['input'];
+}>;
+
+
+export type LoginMutation = { readonly __typename?: 'Mutation', readonly login: { readonly __typename?: 'UsersPermissionsLoginPayload', readonly jwt?: string | null, readonly user: { readonly __typename?: 'UsersPermissionsMe', readonly id: string, readonly username: string, readonly email?: string | null } } };

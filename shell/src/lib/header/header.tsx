@@ -1,14 +1,12 @@
 'use client';
 
-import { Button, Navbar } from '@daylix-ui/components';
-import { useTranslations } from 'next-intl';
-import { Sidebar, LocalSwitcher } from '@daylix/components';
+import { Navbar } from '@daylix-ui/components';
+import { Sidebar, LocalSwitcher, AuthButton } from '@daylix/components';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useParams } from 'next/navigation';
 
 export const Header = () => {
-  const t = useTranslations('homePage.navBar');
   const params = useParams();
   const locale = params?.locale as string || 'uk';
 
@@ -31,9 +29,7 @@ export const Header = () => {
         </Navbar.Start>
         <Navbar.End>
           <div className="flex gap-4">
-            <Button color="primary">
-              <span>{t('login.title')}</span>
-            </Button>
+            <AuthButton />
             <LocalSwitcher />
           </div>
         </Navbar.End>
