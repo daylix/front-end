@@ -1,5 +1,5 @@
 import React from 'react';
-import { CardContainer } from '@daylix/components';
+import CardContainer from '../card-container';
 
 interface FormContainerProps {
   children: React.ReactNode;

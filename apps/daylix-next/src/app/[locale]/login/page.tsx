@@ -5,6 +5,8 @@ import { useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
 import { Button, Input } from '@daylix-ui/components';
 import { FormContainer } from '@daylix/components';
+import { loginUser } from '@daylix/core/data-access';
+import { setAuthState, setUserData } from '@daylix/utils';
 
 export default function LoginPage() {
   const t = useTranslations('Login');
@@ -20,17 +22,33 @@ export default function LoginPage() {
     setError('');
 
     try {
-      // Here you would implement your actual authentication logic
-      // This is a placeholder for demonstration purposes
-      console.log('Login attempt with:', { email, password });
-      
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1000));
-      
-      // Redirect to home page after successful login
+      const data = await loginUser(email, password);
+
+      // Save authentication state and user data in localStorage
+      setAuthState(true);
+      setUserData({
+        id: String(data.user.id),
+        username: data.user.username,
+        email: data.user.email
+      });
+
+      // Set JWT in a cookie
+      await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          jwt: data.jwt,
+          user: data.user
+        }),
+      });
+
       router.push('/');
-    } catch (err) {
-      setError(t('loginFailed'));
+      router.refresh();
+    } catch (err: Error | unknown) {
+      const errorMessage = err instanceof Error ? err.message : String(err);
+      setError(errorMessage || t('loginFailed'));
       console.error('Login error:', err);
     } finally {
       setIsLoading(false);
@@ -39,13 +57,13 @@ export default function LoginPage() {
 
   return (
     <FormContainer title={t('title')}>
-        
+
         {error && (
           <div className="mb-4 p-3 rounded-md bg-red-500/20 text-red-400 text-sm">
             {error}
           </div>
         )}
-        
+
         <form onSubmit={handleSubmit}>
           <Input
             id="email"
@@ -58,7 +76,7 @@ export default function LoginPage() {
             fullWidth
             size="md"
           />
-          
+
           <Input
             id="password"
             type="password"
@@ -70,7 +88,7 @@ export default function LoginPage() {
             fullWidth
             size="md"
           />
-          
+
           <Button
             type="submit"
             disabled={isLoading}
@@ -81,13 +99,13 @@ export default function LoginPage() {
             {isLoading ? t('loggingIn') : t('loginButton')}
           </Button>
         </form>
-        
+
         <div className="mt-4 text-center text-sm text-gray-300">
           <a href="#" className="text-indigo-400 hover:text-indigo-300 hover:underline transition-colors">
             {t('forgotPassword')}
           </a>
         </div>
-        
+
         <div className="mt-6 text-center text-sm text-gray-300">
           <p>
             {t('noAccount')}{' '}
