@@ -3,7 +3,7 @@
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { useTranslations } from 'next-intl';
-import { Button } from '@daylix-ui/components';
+import { Button, Input } from '@daylix-ui/components';
 import { FormContainer } from '@daylix/components';
 
 export default function LoginPage() {
@@ -47,35 +47,29 @@ export default function LoginPage() {
         )}
         
         <form onSubmit={handleSubmit}>
-          <div className="mb-5 w-full sm:min-w-[400px]">
-            <label htmlFor="email" className="block mb-2 text-sm font-medium text-gray-200">
-              {t('emailLabel')}
-            </label>
-            <input
-              id="email"
-              type="email"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              className="w-full px-4 py-3 bg-[#141414]/60 border border-white/10 rounded-md text-white focus:outline-none focus:border-indigo-500/50 focus:ring-2 focus:ring-indigo-500/25 transition-colors"
-              required
-              autoComplete="email"
-            />
-          </div>
+          <Input
+            id="email"
+            type="email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            label={t('emailLabel')}
+            required
+            autoComplete="email"
+            fullWidth
+            size="md"
+          />
           
-          <div className="mb-5 w-full sm:min-w-[400px]">
-            <label htmlFor="password" className="block mb-2 text-sm font-medium text-gray-200">
-              {t('passwordLabel')}
-            </label>
-            <input
-              id="password"
-              type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              className="w-full px-4 py-3 bg-[#141414]/60 border border-white/10 rounded-md text-white focus:outline-none focus:border-indigo-500/50 focus:ring-2 focus:ring-indigo-500/25 transition-colors"
-              required
-              autoComplete="current-password"
-            />
-          </div>
+          <Input
+            id="password"
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            label={t('passwordLabel')}
+            required
+            autoComplete="current-password"
+            fullWidth
+            size="md"
+          />
           
           <Button
             type="submit"
