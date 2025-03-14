@@ -6,7 +6,7 @@ import { useTranslations } from 'next-intl';
 import { Button, Input } from '@daylix-ui/components';
 import { FormContainer } from '@daylix/components';
 import { loginUser } from '@daylix/core/data-access';
-import { setAuthState, setUserData } from '@daylix/utils';
+import { useAuth } from '@daylix/auth';
 
 export default function LoginPage() {
   const t = useTranslations('Login');
@@ -16,6 +16,8 @@ export default function LoginPage() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
 
+  const { login } = useAuth();
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
@@ -24,9 +26,8 @@ export default function LoginPage() {
     try {
       const data = await loginUser(email, password);
 
-      // Save authentication state and user data in localStorage
-      setAuthState(true);
-      setUserData({
+      // Using login method from Auth context
+      login({
         id: String(data.user.id),
         username: data.user.username,
         email: data.user.email

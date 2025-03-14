@@ -2,7 +2,7 @@
 
 import React from 'react';
 import { useParams, useRouter } from 'next/navigation';
-import { clearAuthData } from '@daylix/utils';
+import { useAuth } from '@daylix/auth';
 
 interface LogoutButtonProps {
   children?: React.ReactNode;
@@ -19,19 +19,15 @@ const LogoutButton: React.FC<LogoutButtonProps> = ({
   const router = useRouter();
   const locale = params?.locale as string || 'uk';
 
+  const { logout } = useAuth();
+
   const handleLogout = async () => {
     try {
       if (onLogout) {
         onLogout();
       }
 
-      clearAuthData();
-
-      // Call the API route to remove the cookie
-      await fetch('/api/auth/logout', {
-        method: 'POST',
-      });
-
+      await logout();
       router.push(`/${locale}/login`);
     } catch (error) {
       console.error('Error during logout:', error);

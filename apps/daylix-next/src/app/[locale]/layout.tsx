@@ -7,6 +7,7 @@ import { Roboto } from 'next/font/google';
 import React from 'react';
 import { Header } from '@daylix/shell';
 import { TopBar } from '@daylix/components';
+import { AuthProvider } from '@daylix/auth';
 
 const roboto = Roboto({
   weight: ['300', '400', '500', '700'],
@@ -29,7 +30,7 @@ export default async function LocaleLayout({
   children: React.ReactNode;
   params: { locale: string };
 }) {
-  if (!routing.locales.includes(locale as any)) {
+  if (!routing.locales.includes(locale as typeof routing.locales[number])) {
     notFound();
   }
 
@@ -57,9 +58,11 @@ export default async function LocaleLayout({
       }}
     >
     <NextIntlClientProvider locale={locale} messages={messages}>
-      <Header />
-      <TopBar />
-      {children}
+      <AuthProvider>
+        <Header />
+        <TopBar />
+        {children}
+      </AuthProvider>
     </NextIntlClientProvider>
     </body>
     </html>
